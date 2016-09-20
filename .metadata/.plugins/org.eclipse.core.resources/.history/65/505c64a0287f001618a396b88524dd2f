@@ -13,16 +13,13 @@ public class Authentication {
 			createMember();
 		}
 	}
-	public boolean validateID(int iD){
-		if(securityNumber==9){
-			return Registry.containsID(iD);
-		}
-		return false;
+	public boolean validateID(){
+		
 	}
-	public void createMember(){
+	public void CreateMember(){
 		iD = Registry.getNextValidID();
 	}
-	public void celeteMember(){
+	public void DeleteMember(){
 	}
 	private String setName(){
 		return name;

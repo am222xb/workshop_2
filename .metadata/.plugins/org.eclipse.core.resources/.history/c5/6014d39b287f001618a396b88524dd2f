@@ -6,23 +6,16 @@ public class Authentication {
 	private int securityNumber;
 	
 	public Authentication(int iD){
-		if(validateID(iD)){
-			
-		}
-		else{
-			createMember();
-		}
+		this.iD = iD;
+		validateID();
 	}
-	public boolean validateID(int iD){
-		if(securityNumber==9){
-			return Registry.containsID(iD);
-		}
-		return false;
+	public void validateID(){
+		
 	}
-	public void createMember(){
+	public void CreateMember(){
 		iD = Registry.getNextValidID();
 	}
-	public void celeteMember(){
+	public void DeleteMember(){
 	}
 	private String setName(){
 		return name;
