@@ -9,15 +9,11 @@ public class Boat {
 		this.typeOfBoat = typeOfBoat;
 		this.lengthOfBoat = lengthOfBoat;
 	}
-	
-	public String getType(){
-		return typeOfBoat;
-	}
 	public int getLength(){
 		return lengthOfBoat;
 	}
-	public void setType(String typeOfBoat){
-		this.typeOfBoat = typeOfBoat;
+	public String getType(){
+		return typeOfBoat;
 	}
 	public void setLength(int lengthOfBoat){
 		this.lengthOfBoat = lengthOfBoat;
