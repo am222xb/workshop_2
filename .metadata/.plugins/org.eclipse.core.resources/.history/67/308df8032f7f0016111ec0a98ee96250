@@ -1,0 +1,24 @@
+package workshop_2;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class test {
+	
+	private File file = new File("TraceFile.txt");
+	private PrintWriter writer= new PrintWriter(file);
+
+	public static void main(String[] args) {
+		File dir = new File("testfolder");
+		dir.mkdir();
+		File dir2 = new File("testfolder2");
+		dir2.mkdir();
+		List<File> list = new ArrayList<File>();
+		list.add(dir);
+		list.add(dir2);
+		System.out.println(list.contains(dir2));
+
+	}
+
+}
