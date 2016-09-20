@@ -1,0 +1,23 @@
+package workshop_2;
+
+public class Authentication {
+	private String name;
+	private int iD=1;			// REMOVE
+	private int securityNumber;
+	
+	public Authentication(int id){
+		validateID();
+	}
+	public void validateID(){
+	}
+	public void CreateMember(){
+		iD = Registry.getNextValidID();
+	}
+	public void DeleteMember(){
+	}
+	private String setName(){
+		return name;
+		
+		
+	}
+}

@@ -14,7 +14,7 @@ public class Authentication {
 		}
 	}
 	public boolean validateID(int iD){
-		if(securityNumber==9){
+		if(securityNumber=9){
 			return Registry.containsID(iD);
 		}
 		return false;
