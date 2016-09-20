@@ -20,14 +20,4 @@ public class Member {
 	public int getSecurityNumber(){
 		return securityNumber;
 	}
-	
-	public void setName(String nameChange){
-		this.name = nameChange;
-	}
-	public void setID(int idChange){
-		this.id = idChange;
-	}
-	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
-	}
 }

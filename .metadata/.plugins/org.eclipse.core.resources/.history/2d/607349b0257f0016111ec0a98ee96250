@@ -12,22 +12,12 @@ public class Member {
 	}
 	
 	public String getName(){
-		return name;
+		return null;
 	}
 	public int getID(){
-		return id;
+		return 0;
 	}
 	public int getSecurityNumber(){
-		return securityNumber;
-	}
-	
-	public void setName(String nameChange){
-		this.name = nameChange;
-	}
-	public void setID(int idChange){
-		this.id = idChange;
-	}
-	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
+		return 0;
 	}
 }

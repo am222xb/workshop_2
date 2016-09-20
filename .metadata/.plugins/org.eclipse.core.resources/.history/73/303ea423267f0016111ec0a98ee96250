@@ -28,6 +28,6 @@ public class Member {
 		this.id = idChange;
 	}
 	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
+		this.securityNumber = 
 	}
 }

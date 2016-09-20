@@ -1,0 +1,11 @@
+package workshop_2;
+
+public class Member {
+	
+	public void Name(){
+	}
+	public void ID(){
+	}
+	public void SecurityNumber(){
+	}
+}

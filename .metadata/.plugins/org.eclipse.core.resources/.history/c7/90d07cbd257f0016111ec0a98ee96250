@@ -15,19 +15,9 @@ public class Member {
 		return name;
 	}
 	public int getID(){
-		return id;
+		return 0;
 	}
 	public int getSecurityNumber(){
-		return securityNumber;
-	}
-	
-	public void setName(String nameChange){
-		this.name = nameChange;
-	}
-	public void setID(int idChange){
-		this.id = idChange;
-	}
-	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
+		return 0;
 	}
 }

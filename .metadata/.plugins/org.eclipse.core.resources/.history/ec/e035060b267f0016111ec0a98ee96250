@@ -24,10 +24,10 @@ public class Member {
 	public void setName(String nameChange){
 		this.name = nameChange;
 	}
-	public void setID(int idChange){
-		this.id = idChange;
+	public void setID(){
+		
 	}
-	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
+	public void setSecurityNumber(){
+		
 	}
 }

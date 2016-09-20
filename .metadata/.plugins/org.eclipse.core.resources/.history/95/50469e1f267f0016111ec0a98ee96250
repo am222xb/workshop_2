@@ -27,7 +27,7 @@ public class Member {
 	public void setID(int idChange){
 		this.id = idChange;
 	}
-	public void setSecurityNumber(int securityNumberChange){
-		this.securityNumber = securityNumberChange;
+	public void setSecurityNumber(){
+		
 	}
 }
