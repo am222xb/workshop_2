@@ -1,0 +1,11 @@
+package workshop_2;
+
+public class Boat {
+	public String typeOfBoat; //Sailboat, Motorsailer, kayak/Canoe, Other 
+	public int lengthOfBoat; //Length of boat in cm
+	
+	public Boat(String type, int length){
+		
+	}
+
+}
