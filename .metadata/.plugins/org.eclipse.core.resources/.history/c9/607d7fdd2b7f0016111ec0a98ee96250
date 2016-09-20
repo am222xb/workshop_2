@@ -1,0 +1,11 @@
+package workshop_2;
+
+public class test {
+
+	public static void main(String[] args) {
+		File dir = new File("nameoffolder");
+		dir.mkdir();
+
+	}
+
+}
