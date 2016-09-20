@@ -1,32 +1,58 @@
 package workshop_2;
 
 public class Authentication {
-	private String name;
-	private int iD=1;			// TEMPORARY
-	private int securityNumber;
-	
+	private static String name;
+	private static int iD;			
+	private static String securityNumber;
+
 	public Authentication(int iD){
-		if(validateID(iD)){
-			
-		}
-		else{
-			createMember();
-		}
+		validateID(iD);		
 	}
 	public boolean validateID(int iD){
-		if(securityNumber==9){
-			return Registry.containsID(iD);
+		System.out.println(iD);
+		if(Registry.containsID(iD)){
+			System.out.println("ID exist");
+			return true;
 		}
-		return false;
+		else{
+			System.out.println("ID does not exist");
+			return false;
+		}
 	}
-	public void createMember(){
+	public static void createMember(String inputName, String inputSecurityNumber){
 		iD = Registry.getNextValidID();
+		try {
+			if(correctName(inputName)&&correctSecurityNumber(inputSecurityNumber)){
+				name = inputName;
+				securityNumber = inputSecurityNumber;
+				System.out.println("Name: "+name+", Security Number: "+securityNumber+", ID: "+iD);
+				//TODO Write Member to File.
+			}
+			else{
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			System.err.println("Name or Security Number are incorrect.");
+		}
 	}
-	public void celeteMember(){
+	private static boolean correctSecurityNumber(String securityNumber) {
+		if(securityNumber.matches("\\d{6}-\\d{4}")||securityNumber.matches("\\d{8}-\\d{4}")){
+			return true;	
+		}
+		else{
+			System.out.println("Wrong Security Number");
+			return false;
+		}
 	}
-	private String setName(){
-		return name;
-		
-		
+	private static Boolean correctName(String name) {
+		if( name.matches("[a-zA-Z ]+") && name.length()<30){
+			return true;	
+		}
+		else{
+			System.out.println("Wrong Name");
+			return false;
+		}
 	}
+	
+
 }
