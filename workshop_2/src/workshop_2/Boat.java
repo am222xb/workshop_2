@@ -22,4 +22,5 @@ public class Boat {
 	public void setLength(String lengthOfBoat){
 		this.lengthOfBoat = lengthOfBoat;
 	}
+	
 }

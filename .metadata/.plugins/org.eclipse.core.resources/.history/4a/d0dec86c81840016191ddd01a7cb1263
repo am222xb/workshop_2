@@ -1,0 +1,84 @@
+package workshop_2;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+
+public class Member {
+	private static String name;
+	private static int iD;									
+	private static String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
+	private static Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
+	private static int numberOfBoats;
+	
+	public Member(String inputName, int inputID, String inputSecurityNumber){
+		name = inputName;
+		iD = inputID;
+		securityNumber = inputSecurityNumber;
+		numberOfBoats = Registry.numberOfBoats();
+	}
+	
+	public String getName(){
+		return name;
+	}
+	public int getID(){
+		return iD;
+	}
+	public String getSecurityNumber(){
+		return securityNumber;
+	}
+	
+	public void setName(String nameChange){
+		this.name = nameChange;
+	}
+	public void setID(int idChange){
+		this.iD = idChange;
+	}
+	public void setSecurityNumber(String securityNumberChange){
+		this.securityNumber = securityNumberChange;
+	}
+	public static void addBoat(String inputType, String inputLength){
+		try {
+			if(correctLength(inputLength)){
+				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
+				//TODO numberOfBoats = Registry.numberOfBoats();
+				numberOfBoats+=1;
+				System.out.println("Type: "+inputType+", Security Number: "+inputLength);
+				writeBoatToRegistry(numberOfBoats,inputType,inputLength);
+			}
+			else{
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
+	private static Boolean correctLength(String input) {
+		System.out.println(input);
+		try{
+			if( input.matches("[0-9 . ,]+")){
+				return true;	
+			}
+			else{
+				throw new Exception();
+			}	
+		}catch (Exception e) {
+			System.err.println("Not acceptable length!");
+			return false;
+		}
+		
+	}
+	private static void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
+		File file = new File(iD+"/"+iD+"_boat_"+numberOfBoats+".txt");
+		PrintWriter writer= new PrintWriter(file);
+		
+		writer.println(iD+"\n"+numberOfBoats+"\n"+inputType+"\n"+inputLength);
+		writer.close();
+	}
+	private static void manageBoat(){
+		
+	}
+	
+	
+}

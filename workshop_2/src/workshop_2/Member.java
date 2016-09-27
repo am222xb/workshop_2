@@ -1,44 +1,50 @@
 package workshop_2;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+
 public class Member {
-	public String name;
-	public int id;									
-	public String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
-	public static Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
+	private static String name;
+	private static int iD;									
+	private static String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
+	private static Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
 	private static int numberOfBoats;
-	
-	public Member(String name, int id, String securityNumber){
-		this.name = name;
-		this.id = id;
-		this.securityNumber = securityNumber;
+
+	public Member(String inputName, int inputID, String inputSecurityNumber){
+		name = inputName;
+		iD = inputID;
+		securityNumber = inputSecurityNumber;
 		numberOfBoats = Registry.numberOfBoats();
 	}
-	
+
 	public String getName(){
 		return name;
 	}
 	public int getID(){
-		return id;
+		return iD;
 	}
 	public String getSecurityNumber(){
 		return securityNumber;
 	}
-	
+
 	public void setName(String nameChange){
-		this.name = nameChange;
+		name = nameChange;
 	}
 	public void setID(int idChange){
-		this.id = idChange;
+		iD = idChange;
 	}
 	public void setSecurityNumber(String securityNumberChange){
-		this.securityNumber = securityNumberChange;
+		securityNumber = securityNumberChange;
 	}
-	public static void addBoat(String inputType, String inputLength){
+	public void addBoat(String inputType, String inputLength){
 		try {
 			if(correctLength(inputLength)){
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
-				System.out.println("Type: "+inputType+", Security Number: "+inputLength);
-				//TODO Write Member to File.
+				//TODO numberOfBoats = Registry.numberOfBoats();
+				numberOfBoats+=1;
+				writeBoatToRegistry(numberOfBoats,inputType,inputLength);
 			}
 			else{
 				throw new Exception();
@@ -47,8 +53,27 @@ public class Member {
 			System.err.println(e.getMessage());
 		}
 	}
+	public void manageBoat(int boatID, String inputType, String inputLength){
+
+		try {
+			if(correctLength(inputLength) && boatID<=numberOfBoats && boatID>=1){
+				if(!inputType.equals(listOfBoats[boatID-1].typeOfBoat)){
+					listOfBoats[boatID-1].setType(inputType);
+				}
+				if(!inputLength.equals(listOfBoats[boatID-1].lengthOfBoat)){
+					listOfBoats[boatID-1].setLength(inputLength);
+				}
+				writeBoatToRegistry(boatID, listOfBoats[boatID-1].getType(),listOfBoats[boatID-1].getLength());
+			}
+			else{
+				System.out.println("Error");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private static Boolean correctLength(String input) {
-		System.out.println(input);
 		try{
 			if( input.matches("[0-9 . ,]+")){
 				return true;	
@@ -60,7 +85,15 @@ public class Member {
 			System.err.println("Not acceptable length!");
 			return false;
 		}
-		
+
 	}
-	
+	private static void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
+		File file = new File(iD+"/"+iD+"_boat_"+numberOfBoats+".txt");
+		PrintWriter writer= new PrintWriter(file);
+
+		writer.println(iD+"\n"+numberOfBoats+"\n"+inputType+"\n"+inputLength);
+		writer.close();
+	}
+
+
 }
