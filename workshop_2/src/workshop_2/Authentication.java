@@ -36,13 +36,18 @@ public class Authentication {
 		}
 	}
 	private static boolean correctSecurityNumber(String securityNumber) {
+		try{
 		if(securityNumber.matches("\\d{6}-\\d{4}")||securityNumber.matches("\\d{8}-\\d{4}")){
 			return true;	
 		}
+		
 		else{
-			System.out.println("Wrong Security Number");
-			return false;
+			throw new Exception();
 		}
+	} catch (Exception e) {
+		System.err.println("Wrong Security Number");
+		return false;
+	}
 	}
 	private static Boolean correctName(String name) {
 		if( name.matches("[a-zA-Z ]+") && name.length()<30){

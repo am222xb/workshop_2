@@ -36,7 +36,6 @@ public class Member {
 	public static void addBoat(String inputType, String inputLength){
 		try {
 			if(correctLength(inputLength)){
-				
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
 				System.out.println("Type: "+inputType+", Security Number: "+inputLength);
 				//TODO Write Member to File.
@@ -50,13 +49,18 @@ public class Member {
 	}
 	private static Boolean correctLength(String input) {
 		System.out.println(input);
-		if( input.matches("[0-9 . ,]+")){
-			return true;	
-		}
-		else{
-			System.out.println("Wrong length");
+		try{
+			if( input.matches("[0-9 . ,]+")){
+				return true;	
+			}
+			else{
+				throw new Exception();
+			}	
+		}catch (Exception e) {
+			System.err.println("Not acceptable length!");
 			return false;
 		}
+		
 	}
 	
 }
