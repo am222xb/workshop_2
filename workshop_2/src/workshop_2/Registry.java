@@ -13,7 +13,6 @@ public class Registry {
 		return NextValidID;
 	}
 	public int getID() {
-
 		return iD;
 	}
 	public static boolean containsID(int test) {

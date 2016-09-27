@@ -4,19 +4,35 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class read_test {
-
+    static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) throws IOException {
 		try {
 		
 		String line = null;
         FileReader fileReader = new FileReader("testfolder/member.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-
+        int i = 0;
         while((line = bufferedReader.readLine()) != null) {
-            System.out.println(line);
-        }   
+            i++;
+        	if(i == 1){
+            System.out.println("ID: "+line);
+        	}
+        	else if (i == 3){
+        		System.out.println("Name: "+line);
+        	}
+        	else if (i == 5){
+        		System.out.println("Securitynumber: "+line);
+        	}  	
+        } 
+        System.out.println("Do you want to change? [y/n]");
+        String input = scanner.nextLine();
+        if(input == "y"){
+        	changeMember();
+        }
+        else
 
         bufferedReader.close();       
 		}
@@ -29,7 +45,14 @@ public class read_test {
 	                "Error reading file");                  
 	        }
 	}
-
+	public static void changeMember(){
+		System.out.println("What do you wan to change? [name, number]");
+		String input = scanner.nextLine();
+        if(input == "name"){
+        	System.out.println("Name: ");
+            String name = scanner.nextLine();
+        }
 	}
+}
 
 
