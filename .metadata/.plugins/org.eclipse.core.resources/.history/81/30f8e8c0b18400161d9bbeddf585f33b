@@ -1,0 +1,11 @@
+package workshop_2;
+
+public class GUI {
+
+	public static void main(String[] args) {
+		Registry reg = new Registry();
+		System.out.println(reg.listOfMembers.get(1).listOfBoats[1].getLength());
+		
+	}
+
+}
