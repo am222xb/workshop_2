@@ -6,13 +6,13 @@ import java.io.PrintWriter;
 
 
 public class Member {
-	private static String name;
-	private static int iD;									
-	private static String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
-	private static Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
-	private static int numberOfBoats;
+	private  String name;
+	private  int iD;									
+	private  String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
+	public  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
+	public int numberOfBoats;
 
-	public Member(String inputName, int inputID, String inputSecurityNumber){
+	public Member( int inputID, String inputName, String inputSecurityNumber){
 		name = inputName;
 		iD = inputID;
 		securityNumber = inputSecurityNumber;
@@ -87,11 +87,13 @@ public class Member {
 		}
 
 	}
-	private static void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
-		File file = new File(iD+"/"+iD+"_boat_"+numberOfBoats+".txt");
+	private void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
+		File file = new File(iD+"/boat_"+numberOfBoats+".txt");
 		PrintWriter writer= new PrintWriter(file);
 
-		writer.println(iD+"\n"+numberOfBoats+"\n"+inputType+"\n"+inputLength);
+		writer.println(numberOfBoats);
+		writer.println(inputType);
+		writer.println(inputLength);
 		writer.close();
 	}
 
