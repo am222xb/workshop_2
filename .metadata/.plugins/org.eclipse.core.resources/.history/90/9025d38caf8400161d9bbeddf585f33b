@@ -16,7 +16,7 @@ public class Member {
 		name = inputName;
 		iD = inputID;
 		securityNumber = inputSecurityNumber;
-		numberOfBoats = Registry.numberOfBoats(); //TODO fix
+		numberOfBoats = Registry.numberOfBoats();
 	}
 
 	public String getName(){
@@ -40,7 +40,7 @@ public class Member {
 	}
 	public void addBoat(String inputType, String inputLength){
 		try {
-			if(validateLength(inputLength)){
+			if(correctLength(inputLength)){
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
 				//TODO numberOfBoats = Registry.numberOfBoats();
 				numberOfBoats+=1;
@@ -56,7 +56,7 @@ public class Member {
 	public void manageBoat(int boatID, String inputType, String inputLength){
 
 		try {
-			if(validateLength(inputLength) && boatID<=numberOfBoats && boatID>=1){
+			if(correctLength(inputLength) && boatID<=numberOfBoats && boatID>=1){
 				if(!inputType.equals(listOfBoats[boatID-1].typeOfBoat)){
 					listOfBoats[boatID-1].setType(inputType);
 				}
@@ -73,7 +73,7 @@ public class Member {
 			e.printStackTrace();
 		}
 	}
-	private static Boolean validateLength(String input) {
+	private static Boolean correctLength(String input) {
 		try{
 			if( input.matches("[0-9 . ,]+")){
 				return true;	

@@ -16,7 +16,7 @@ public class Member {
 		name = inputName;
 		iD = inputID;
 		securityNumber = inputSecurityNumber;
-		numberOfBoats = Registry.numberOfBoats(); //TODO fix
+		numberOfBoats = Registry.numberOfBoats();
 	}
 
 	public String getName(){
