@@ -36,6 +36,7 @@ public class Member {
 	public static void addBoat(String inputType, String inputLength){
 		try {
 			if(correctLength(inputLength)){
+				
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
 				System.out.println("Type: "+inputType+", Security Number: "+inputLength);
 				//TODO Write Member to File.

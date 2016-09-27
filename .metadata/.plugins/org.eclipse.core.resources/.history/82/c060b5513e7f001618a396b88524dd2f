@@ -3,9 +3,9 @@ package workshop_2;
 public class Boat {
 	
 	public String typeOfBoat; //Sailboat, Motorsailer, kayak/Canoe, Other 
-	public String lengthOfBoat; //Length of boat in cm
+	public int lengthOfBoat; //Length of boat in cm
 	
-	public Boat(String typeOfBoat, String lengthOfBoat){
+	public Boat(String typeOfBoat, int lengthOfBoat){
 		this.typeOfBoat = typeOfBoat;
 		this.lengthOfBoat = lengthOfBoat;
 	}
@@ -13,13 +13,13 @@ public class Boat {
 	public String getType(){
 		return typeOfBoat;
 	}
-	public String getLength(){
+	public int getLength(){
 		return lengthOfBoat;
 	}
 	public void setType(String typeOfBoat){
 		this.typeOfBoat = typeOfBoat;
 	}
-	public void setLength(String lengthOfBoat){
+	public void setLength(int lengthOfBoat){
 		this.lengthOfBoat = lengthOfBoat;
 	}
 }
