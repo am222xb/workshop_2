@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Registry {
@@ -13,7 +14,7 @@ public class Registry {
 	public List<Member> listOfMembers;
 	private static int iD = 5;
 	private static int NextValidID = 6;
-
+	private String[][] verboseList;
 	public Registry(){
 		listOfMembers = loadRegistry();
 	}
@@ -95,5 +96,24 @@ public class Registry {
 		}
 		return null;
 
+	}
+	public String[][] compactList(){
+		String[][] shortList = new String[listOfMembers.size()][3];
+		Iterator<Member> crunchifyIterator = listOfMembers.iterator();
+		int i=0;
+		while (crunchifyIterator.hasNext()) {
+			Member tempMember = crunchifyIterator.next();
+			shortList[i][0] = tempMember.getID()+"";
+			shortList[i][1] = tempMember.getName();
+			shortList[i][2] = tempMember.getSecurityNumber();
+			
+		}
+		return shortList;
+	}
+	public String[][] verboseList(){
+		String[][] longList = new String[listOfMembers.size()][13];
+
+	
+		return longList;
 	}
 }

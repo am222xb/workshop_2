@@ -13,8 +13,8 @@ public class Member {
 	public int numberOfBoats;
 
 	public Member( int inputID, String inputName, String inputSecurityNumber){
-		name = inputName;
 		iD = inputID;
+		name = inputName;
 		securityNumber = inputSecurityNumber;
 		numberOfBoats = Registry.numberOfBoats(); //TODO fix
 	}
@@ -47,6 +47,11 @@ public class Member {
 	}
 	public void setSecurityNumber(String securityNumberChange){
 		securityNumber = securityNumberChange;
+	}
+	
+	public void manageMember(String inputName, String inputSecurityNumber){
+		name = inputName;
+		securityNumber = inputSecurityNumber;
 	}
 	public void writeBoatToFile(String inputType, String inputLength){
 		try {
@@ -106,6 +111,6 @@ public class Member {
 		writer.println(inputLength);
 		writer.close();
 	}
-
+	
 
 }
