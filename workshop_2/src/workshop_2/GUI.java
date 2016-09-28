@@ -3,12 +3,13 @@ package workshop_2;
 public class GUI {
 
 	public static void main(String[] args) {
+		
 		Registry reg = new Registry();
 		for(int i = 0; i <5; i++){
-			System.out.println("Längd: "+reg.listOfMembers.get(i).listOfBoats[0].getLength()+" m");
+			System.out.println("LÃ¤ngd: "+reg.listOfMembers.get(i).getBoat(0).getLength()+" m");
 			}
 		for(int i = 0; i <5; i++){
-		System.out.println("Båttyp: "+reg.listOfMembers.get(i).listOfBoats[0].getType());
+		System.out.println("BÃ¥ttyp: "+reg.listOfMembers.get(i).getBoat(0).getType());
 		}
 	}
 

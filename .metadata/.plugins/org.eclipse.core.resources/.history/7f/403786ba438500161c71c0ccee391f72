@@ -1,0 +1,25 @@
+package workshop_2;
+
+public class GUI {
+
+	public static void main(String[] args) {
+<<<<<<< Updated upstream
+=======
+
+		Authentication.createMember("Mikael Anderssondjkasdjksa","19921221-5298");
+//		Member test = new Member(6,"Pelle","19921221-5298");
+//		test.addBoat("Sailboat", "55.5");
+//		test.addBoat("Dingy", "80");
+//		test.addBoat("Submarine", "60");
+//		test.manageBoat(3,"Sub","50");
+>>>>>>> Stashed changes
+		Registry reg = new Registry();
+		for(int i = 0; i <5; i++){
+			System.out.println("Längd: "+reg.listOfMembers.get(i).listOfBoats[0].getLength()+" m");
+			}
+		for(int i = 0; i <5; i++){
+		System.out.println("Båttyp: "+reg.listOfMembers.get(i).listOfBoats[0].getType());
+		}
+	}
+
+}

@@ -32,6 +32,7 @@ public class Registry {
 
 	}
 	public void deleteMember(){
+		
 	}
 	public static int numberOfBoats() {
 		// TODO Auto-generated method stub
@@ -53,7 +54,7 @@ public class Registry {
 					temp = loadFromFile(boat+(j+1),i);
 					if(temp != null){
 						tempBoat = new Boat(temp[1],temp[2]);
-						tempMember.listOfBoats[j] = tempBoat;
+						tempMember.setBoat(j,tempBoat);
 					}
 				}
 			}	
