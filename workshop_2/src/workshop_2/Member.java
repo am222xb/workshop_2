@@ -9,7 +9,7 @@ public class Member {
 	private  String name;
 	private  int iD;									
 	private  String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
-	public  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
+	private  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
 	public int numberOfBoats;
 
 	public Member( int inputID, String inputName, String inputSecurityNumber){
@@ -18,7 +18,17 @@ public class Member {
 		securityNumber = inputSecurityNumber;
 		numberOfBoats = Registry.numberOfBoats(); //TODO fix
 	}
-
+	public Boat getBoat(int inputBoat){
+		try{
+		return listOfBoats[inputBoat];
+		}catch(Exception e){
+			System.err.println("Boat nr: "+inputBoat+" doesn't exist");
+			return null;
+		}
+	}
+	public void setBoat(int input, Boat inputBoat){
+		listOfBoats[input] = inputBoat;
+	}
 	public String getName(){
 		return name;
 	}
@@ -38,7 +48,7 @@ public class Member {
 	public void setSecurityNumber(String securityNumberChange){
 		securityNumber = securityNumberChange;
 	}
-	public void addBoat(String inputType, String inputLength){
+	public void writeBoatToFile(String inputType, String inputLength){
 		try {
 			if(validateLength(inputLength)){
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
