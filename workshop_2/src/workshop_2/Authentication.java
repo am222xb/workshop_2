@@ -11,7 +11,7 @@ public class Authentication {
 	private static String securityNumber;
 
 	public Authentication(int iD){
-		validateID(iD);		
+		
 	}
 	public boolean validateID(int iD){
 		System.out.println(iD);
