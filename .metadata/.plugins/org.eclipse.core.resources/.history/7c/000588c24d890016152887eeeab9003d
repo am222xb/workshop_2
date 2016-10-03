@@ -1,0 +1,78 @@
+package workshop_2;
+
+import java.util.Scanner;
+
+public class BoatCompany {
+	static Scanner scanner = new Scanner(System.in);
+	//static Authentication authenticate = new Authentication();
+
+	public static void main(String[] args) {
+
+		Registry reg = new Registry();
+		System.out.print("Welcome to the happy pirate! Log in here with your id \nIf you dont have a id enter 0 \nId: ");
+		int id = scanner.nextInt(); 
+
+		if(id == 0){	//TODO check validation with authenticate
+		
+			System.out.print("Your forename: ");
+			String forename = scanner.next(); 
+
+			System.out.print("Your lastname: ");
+			String lastname = scanner.next();
+
+			System.out.print("Your securitynumber: ");
+			String securityNumber = scanner.next(); 
+
+			System.out.println("Information: "+forename +" "+lastname+" "+securityNumber);
+			// TODO authenticate.createMember
+		}
+		
+		System.out.print("Enter what you want to do: ");
+		int state = scanner.nextInt();
+		
+	        switch (state) {
+	            case 1:  monthString = "January";
+	                     break;
+	            case 2:  monthString = "February";
+	                     break;
+	            case 3:  monthString = "March";
+	                     break;
+	            case 4:  monthString = "April";
+	                     break;
+	            case 5:  monthString = "May";
+	                     break;
+	            case 6:  monthString = "June";
+	                     break;
+	            case 7:  monthString = "July";
+	                     break;
+	            case 8:  monthString = "August";
+	                     break;
+	            case 9:  monthString = "September";
+	                     break;
+	            case 10: monthString = "October";
+	                     break;
+	            case 11: monthString = "November";
+	                     break;
+	            case 12: monthString = "December";
+	                     break;
+	            default: monthString = "Invalid month";
+	                     break;
+	        }
+		
+		//		for(int i = 0; i <5; i++){
+		//			System.out.println("Längd: "+reg.listOfMembers.get(i).getBoat(0).getLength()+" m");
+		//		}
+		//		for(int i = 0; i <5; i++){
+		//			System.out.println("Båttyp: "+reg.listOfMembers.get(i).getBoat(0).getType());
+		//		}
+	}
+	public static void menu(){
+		System.out.println("1. Register new boat");
+		System.out.println("2. Change your member infromation");
+		System.out.println("3. Change boat�s infromation");
+		System.out.println("4. Delete boat");
+		System.out.println("5. View compact list");
+		System.out.println("6. View verbose list");
+		System.out.println("7. Search member");
+	}
+}
