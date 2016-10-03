@@ -1,0 +1,142 @@
+package workshop_2;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Registry {
+
+
+	public List<Member> listOfMembers;
+	private static String[][] compactList;
+	private static String[][] verboseList;
+
+	public Registry(){
+		listOfMembers = loadRegistry();
+		compactList = compactList();
+		verboseList = verboseList();
+	}
+	public static int getNextValidID() {
+		for (int i = 1; i < compactList.length+1; i++) {
+			if(!containsID(i)){
+				return i;
+			}
+		}
+		return (compactList.length+1);
+	}
+
+	public static boolean containsID(int inputID) {
+		for (int i = 0; i < verboseList.length; i++) {
+			if(Integer.parseInt(verboseList[i][0]) == inputID){
+				return true;
+			}
+		}
+		return false;
+	}
+	public void deleteMember(int inputID){
+
+	}
+
+	public List<Member> loadRegistry(){
+		List<Member> arr = new ArrayList<Member>();
+		String temp[];
+		Member tempMember;
+		Boat tempBoat;
+		String member = "member";
+		String boat = "boat_";
+		for(int i = 0; i <20; i++){	
+			temp = loadFromFile(member, i);
+			if(temp != null){
+				tempMember =  new Member( Integer.parseInt(temp[0]),temp[1], temp[2]);
+				arr.add(tempMember);
+				for (int j = 0; j < 5; j++) {
+					temp = loadFromFile(boat+(j+1),i);
+					if(temp != null){
+						tempBoat = new Boat(temp[1],temp[2]);
+						tempMember.addNumberOfBoats();
+						tempMember.setBoat(j,tempBoat);
+					}
+				}
+			}	
+		}
+		return arr;
+	}
+	public static String[] loadFromFile(String file, int i){
+		String temp[] = new String[3];
+
+		try {
+			String line = null;
+			FileReader fileReader = new FileReader(i+"/"+file+".txt");
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			int innerCounter = 0;
+			while((line = bufferedReader.readLine()) != null) {
+				innerCounter++;
+				if(innerCounter == 1){
+					temp[0] = line;
+				}
+				else if (innerCounter == 2){
+					temp[1] = line;
+				}
+				else if (innerCounter == 3){
+					temp[2] = line;
+				}  	
+			} 
+			bufferedReader.close();    
+			return temp;
+		}
+		catch(FileNotFoundException ex) {            
+		}
+		catch(IOException ex) {
+			System.out.println(
+					"Error reading file");                  
+		}
+		return null;
+	}
+	public String[][] compactList(){
+		/*	“Compact List”; name, member id and number of boats*/
+
+		String[][] shortList = new String[listOfMembers.size()][3];
+		Iterator<Member> crunchifyIterator = listOfMembers.iterator();
+		int i=0;
+		Member tempMember;
+		while (crunchifyIterator.hasNext()) {
+			tempMember = crunchifyIterator.next();
+			shortList[i][0] = tempMember.getID()+"";
+			shortList[i][1] = tempMember.getName();
+			shortList[i][2] = tempMember.getNumberOfBoats()+"";
+			i++;
+		}
+		return shortList;
+	}
+	public String[][] verboseList(){
+		/*“Verbose List”; name, personal number, member id and boats with boat information*/
+		String[][] longList = new String[listOfMembers.size()][13];
+		Iterator<Member> crunchifyIterator = listOfMembers.iterator();
+		int i=0;
+		Member tempMember;
+		while (crunchifyIterator.hasNext()) {
+			tempMember = crunchifyIterator.next();
+			longList[i][0] = tempMember.getID()+"";
+			longList[i][1] = tempMember.getName();
+			longList[i][2] = tempMember.getSecurityNumber();
+			int counter=0;
+			for (int j = 3; j < 13; j+=2) {
+				if(tempMember.getNumberOfBoats()>counter){
+
+					longList[i][j] = tempMember.listOfBoats[counter].getLength();
+					longList[i][j+k] = tempMember.listOfBoats[counter].getType();
+
+
+					counter++;
+				}
+			}
+			i++;
+		}
+
+		return longList;
+	}
+}

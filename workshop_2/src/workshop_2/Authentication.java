@@ -11,7 +11,7 @@ public class Authentication {
 	private static String securityNumber;
 
 	public Authentication(int iD){
-		validateID(iD);		
+		
 	}
 	public boolean validateID(int iD){
 		System.out.println(iD);
@@ -27,7 +27,7 @@ public class Authentication {
 	public static void createMember(String inputName, String inputSecurityNumber){
 		iD = Registry.getNextValidID();
 		try {
-			if(validateName(inputName)&&validateSecurityNumber(inputSecurityNumber)){
+			if(correctName(inputName)&&correctSecurityNumber(inputSecurityNumber)){
 				name = inputName;
 				securityNumber = inputSecurityNumber;
 				writeMemberToRegistry();
@@ -39,7 +39,7 @@ public class Authentication {
 			System.err.println("Name or Security Number are incorrect.");
 		}
 	}
-	private static boolean validateSecurityNumber(String securityNumber) {
+	private static boolean correctSecurityNumber(String securityNumber) {
 		try{
 		if(securityNumber.matches("\\d{6}-\\d{4}")||securityNumber.matches("\\d{8}-\\d{4}")){
 			return true;	
@@ -53,7 +53,7 @@ public class Authentication {
 		return false;
 	}
 	}
-	private static Boolean validateName(String name) {
+	private static Boolean correctName(String name) {
 		if( name.matches("[a-zA-Z ]+") && name.length()<30){
 			return true;	
 		}

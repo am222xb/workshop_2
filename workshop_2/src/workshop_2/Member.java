@@ -9,18 +9,18 @@ public class Member {
 	private  String name;
 	private  int iD;									
 	private  String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
-	private  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
-	public int numberOfBoats;
+	public  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
+	private int numberOfBoats;
 
 	public Member( int inputID, String inputName, String inputSecurityNumber){
-		name = inputName;
 		iD = inputID;
+		name = inputName;
 		securityNumber = inputSecurityNumber;
-		numberOfBoats = Registry.numberOfBoats(); //TODO fix
+		numberOfBoats = 0;
 	}
 	public Boat getBoat(int inputBoat){
 		try{
-		return listOfBoats[inputBoat];
+			return listOfBoats[inputBoat];
 		}catch(Exception e){
 			System.err.println("Boat nr: "+inputBoat+" doesn't exist");
 			return null;
@@ -28,6 +28,12 @@ public class Member {
 	}
 	public void setBoat(int input, Boat inputBoat){
 		listOfBoats[input] = inputBoat;
+	}
+	public int getNumberOfBoats() {
+		return numberOfBoats;
+	}
+	public void addNumberOfBoats() {
+		numberOfBoats++;
 	}
 	public String getName(){
 		return name;
@@ -48,11 +54,16 @@ public class Member {
 	public void setSecurityNumber(String securityNumberChange){
 		securityNumber = securityNumberChange;
 	}
+
+	public void manageMember(String inputName, String inputSecurityNumber){
+		name = inputName;
+		securityNumber = inputSecurityNumber;
+	}
+
 	public void writeBoatToFile(String inputType, String inputLength){
 		try {
 			if(validateLength(inputLength)){
 				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
-				//TODO numberOfBoats = Registry.numberOfBoats();
 				numberOfBoats+=1;
 				writeBoatToRegistry(numberOfBoats,inputType,inputLength);
 			}
@@ -97,8 +108,16 @@ public class Member {
 		}
 
 	}
+	public int nextValidBoat(){
+		for (int i = 0; i < 5; i++) {
+			if(listOfBoats[i]==null){
+				return i;
+			}
+		}
+		return numberOfBoats;
+	}
 	private void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
-		File file = new File(iD+"/boat_"+numberOfBoats+".txt");
+		File file = new File(iD+"/boat_"+nextValidBoat()+".txt");
 		PrintWriter writer= new PrintWriter(file);
 
 		writer.println(numberOfBoats);
@@ -106,6 +125,23 @@ public class Member {
 		writer.println(inputLength);
 		writer.close();
 	}
+	public void deleteMember(){
+
+		File dir = new File(iD+"");
+		String[]entries = dir.list();
+		for(String s: entries){
+			File currentFile = new File(dir.getPath(),s);
+			currentFile.delete();
+		}
+		dir.delete();
+	}
+	public void deleteBoat(int inputBoatID){
+		if(inputBoatID>=0 && inputBoatID <= numberOfBoats){
+		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
+		boatFile.delete();
+		}
+	}
+
 
 
 }
