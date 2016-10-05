@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-<<<<<<< HEAD
-		<item value="private static boolean correctSecurityNumber(int securityNumber) {" key="selection"/>
-		<list key="findhistory">
-			<item value="private static boolean correctSecurityNumber(int securityNumber) {"/>
-		</list>
-=======
 		<item value="false" key="isRegEx"/>
 		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
@@ -27,6 +21,5 @@
 		<item value="399" key="DIALOG_HEIGHT"/>
 		<item value="488" key="DIALOG_X_ORIGIN"/>
 		<item value="122" key="DIALOG_Y_ORIGIN"/>
->>>>>>> e9d302949e211d1509cd40d678ccf9c95de88358
 	</section>
 </section>

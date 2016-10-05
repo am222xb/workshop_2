@@ -17,9 +17,10 @@ public class Registry {
 
 	public Registry(){
 		listOfMembers = loadRegistry();
-		compactList = compactList();
-		verboseList = verboseList();
+		compactList = compactList(listOfMembers);
+		verboseList = verboseList(listOfMembers);
 	}
+	
 	public static int getNextValidID() {
 		for (int i = 1; i < compactList.length+1; i++) {
 			if(!containsID(i)){
@@ -38,6 +39,20 @@ public class Registry {
 		return false;
 	}
 
+	public Member getMember(int inputID){
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			if(listOfMembers.get(i).getID()==inputID){
+				return listOfMembers.get(i);
+			}
+		}
+		return null;
+	}
+	public String[][] getVerboseList(){
+		return verboseList;
+	}
+	public String[][] getCompactList(){
+		return compactList;
+	}
 	public List<Member> loadRegistry(){
 		List<Member> arr = new ArrayList<Member>();
 		String temp[];
@@ -62,9 +77,9 @@ public class Registry {
 		}
 		return arr;
 	}
+
 	public static String[] loadFromFile(String file, int i){
 		String temp[] = new String[3];
-
 		try {
 			String line = null;
 			FileReader fileReader = new FileReader(i+"/"+file+".txt");
@@ -88,20 +103,19 @@ public class Registry {
 		catch(FileNotFoundException ex) {            
 		}
 		catch(IOException ex) {
-			System.out.println(
-					"Error reading file");                  
+			System.out.println("Error reading file");                  
 		}
 		return null;
 	}
-	public String[][] compactList(){
-		/*	“Compact List”; name, member id and number of boats*/
 
-		String[][] shortList = new String[listOfMembers.size()][3];
-		Iterator<Member> crunchifyIterator = listOfMembers.iterator();
+	public String[][] compactList(List<Member> inputList){
+		/*	“Compact List”; name, member id and number of boats*/
+		String[][] shortList = new String[inputList.size()][3];
+		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
 		Member tempMember;
-		while (crunchifyIterator.hasNext()) {
-			tempMember = crunchifyIterator.next();
+		while (memberIterator.hasNext()) {
+			tempMember = memberIterator.next();
 			shortList[i][0] = tempMember.getID()+"";
 			shortList[i][1] = tempMember.getName();
 			shortList[i][2] = tempMember.getNumberOfBoats()+"";
@@ -109,15 +123,15 @@ public class Registry {
 		}
 		return shortList;
 	}
-	public String[][] verboseList(){
+
+	public String[][] verboseList(List<Member> inputList){
 		/*“Verbose List”; name, personal number, member id and boats with boat information*/
-		String[][] longList = new String[listOfMembers.size()][13];
-		Iterator<Member> crunchifyIterator = listOfMembers.iterator();
+		String[][] longList = new String[inputList.size()][13];
+		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
 		Member tempMember;
-		while (crunchifyIterator.hasNext()) {
-			
-			tempMember = crunchifyIterator.next();
+		while (memberIterator.hasNext()) {
+			tempMember = memberIterator.next();
 			longList[i][0] = tempMember.getID()+"";
 			longList[i][1] = tempMember.getName();
 			longList[i][2] = tempMember.getSecurityNumber();
@@ -126,12 +140,42 @@ public class Registry {
 				if(tempMember.listOfBoats[counter]!=null){
 					longList[i][j] = tempMember.listOfBoats[counter].getType();
 					longList[i][j+1] = tempMember.listOfBoats[counter].getLength();
-					
-				}counter++;
+				}
+				counter++;
 			}
 			i++;
 		}
-
 		return longList;
 	}
+
+	public String[][] containsName(String inputName){
+		List<Member> tempList = new ArrayList<Member>();
+		inputName = inputName.toLowerCase();
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			String temp = listOfMembers.get(i).getName().toLowerCase();
+			if(inputName.length()<= temp.length()){
+				temp = temp.substring(0,inputName.length());
+				if(inputName.equals(temp)){
+					tempList.add(listOfMembers.get(i));
+				}
+			}	
+		}
+		return verboseList(tempList);
+	}
+	public String[][] containsTypeOfBoat(String inputBoat){
+		//TODO
+		List<Member> tempList = new ArrayList<Member>();
+		inputBoat = inputBoat.toLowerCase();
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			Member tempMember = listOfMembers.get(i);
+			System.out.println("---------");
+			for (int j = 0; j < tempMember.getNumberOfBoats() ; j++) {
+
+			System.out.println(tempMember.listOfBoats[j].getType());	
+			}
+			
+		}
+		return null;
+	}
+
 }

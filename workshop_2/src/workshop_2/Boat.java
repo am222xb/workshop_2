@@ -2,8 +2,8 @@ package workshop_2;
 
 public class Boat {
 	
-	public String typeOfBoat; //Sailboat, Motorsailer, kayak/Canoe, Other 
-	public String lengthOfBoat; //Length of boat in cm
+	private String typeOfBoat; //Sailboat, Motorsailer, kayak/Canoe, Other 
+	private String lengthOfBoat; //Length of boat in cm
 	
 	public Boat(String typeOfBoat, String lengthOfBoat){
 		this.typeOfBoat = typeOfBoat;
