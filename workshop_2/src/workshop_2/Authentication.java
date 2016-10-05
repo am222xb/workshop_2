@@ -10,21 +10,19 @@ public class Authentication {
 	private static int iD;			
 	private static String securityNumber;
 
-	public Authentication(int iD){
+	public Authentication(){
 		
 	}
 	public boolean validateID(int iD){
 		System.out.println(iD);
 		if(Registry.containsID(iD)){
-			System.out.println("ID exist");
 			return true;
 		}
 		else{
-			System.out.println("ID does not exist");
 			return false;
 		}
 	}
-	public static void createMember(String inputName, String inputSecurityNumber){
+	public void createMember(String inputName, String inputSecurityNumber){
 		iD = Registry.getNextValidID();
 		try {
 			if(correctName(inputName)&&correctSecurityNumber(inputSecurityNumber)){
