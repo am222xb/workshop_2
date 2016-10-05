@@ -2,7 +2,11 @@
   "version": "v1",
   "title": "Eclipse Automated Error Reporting",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "timestamp": 1475656803946,
+=======
+  "timestamp": 1475656926995,
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
 =======
   "timestamp": 1475656926995,
 >>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
@@ -59,7 +63,11 @@
     "org.eclipse.ui::Conflicting handlers for*"
   ],
 <<<<<<< HEAD
+<<<<<<< HEAD
   "problemsZipLastDownloadTimestamp": 1475656827182
+=======
+  "problemsZipLastDownloadTimestamp": 1475656946256
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
 =======
   "problemsZipLastDownloadTimestamp": 1475656946256
 >>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
