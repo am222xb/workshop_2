@@ -78,10 +78,10 @@ public class Member {
 
 		try {
 			if(validateLength(inputLength) && boatID<=numberOfBoats && boatID>=1){
-				if(!inputType.equals(listOfBoats[boatID-1].typeOfBoat)){
+				if(!inputType.equals(listOfBoats[boatID-1].getType())){
 					listOfBoats[boatID-1].setType(inputType);
 				}
-				if(!inputLength.equals(listOfBoats[boatID-1].lengthOfBoat)){
+				if(!inputLength.equals(listOfBoats[boatID-1].getLength())){
 					listOfBoats[boatID-1].setLength(inputLength);
 				}
 				writeBoatToRegistry(boatID, listOfBoats[boatID-1].getType(),listOfBoats[boatID-1].getLength());

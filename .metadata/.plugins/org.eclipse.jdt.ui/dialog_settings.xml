@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-<<<<<<< HEAD
-=======
 	<item value="true" key="Replace"/>
 	<item value="true" key="Annotations"/>
 	<item value="true" key="Comments"/>
@@ -31,9 +29,10 @@
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
 	</section>
->>>>>>> e9d302949e211d1509cd40d678ccf9c95de88358
 	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="completion_proposal_size">
+	</section>
+	<section name="JavaElementSearchActions">
 	</section>
 </section>
