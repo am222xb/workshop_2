@@ -45,14 +45,13 @@ public class Member {
 		return securityNumber;
 	}
 
-	public void setName(String nameChange){
+	public void setName(String nameChange) throws FileNotFoundException{
 		name = nameChange;
+		updateMemberFile();
 	}
-	public void setID(int idChange){
-		iD = idChange;
-	}
-	public void setSecurityNumber(String securityNumberChange){
+	public void setSecurityNumber(String securityNumberChange) throws FileNotFoundException{
 		securityNumber = securityNumberChange;
+		updateMemberFile();
 	}
 
 	public void manageMember(String inputName, String inputSecurityNumber) throws FileNotFoundException{
@@ -151,20 +150,12 @@ public void deleteMember(){
 			currentFile.delete();
 		}
 		dir.delete();
-<<<<<<< HEAD
 	
 }
 	
-public void deleteBoat(int inputBoatID){
-		if(inputBoatID>=0 && inputBoatID <= numberOfBoats){
-		File boatFile = new File(getID()+"/boat_"+inputBoatID+".txt");
-		System.out.print(getID()+"/boat_"+inputBoatID+".txt");
-=======
-	}
 	public void deleteBoat(int inputBoatID){
 		if(inputBoatID>=1 && inputBoatID <= numberOfBoats){
 		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
->>>>>>> 3a66ccb7ce2ffbce522090d842d2685ba70a235a
 		boatFile.delete();
 		}
 	}

@@ -12,12 +12,14 @@ public class BoatCompany {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-		System.out.print("Welcome to Tors boats and hoes! \nLog in here with your id. \nIf you dont have a id enter 0: ");
+		System.out.print("Welcome to Tors boats and hoes! \nLog in with your id if you´re a member. \nIf you´re not a member enter 0: ");
 		id = scanner.nextInt(); 
 
 		if(!authenticate.validateID(id)){
-
-			System.out.print("Your forename: ");
+			System.out.print("You are not a member of Tors boats and hoes!\nDo you want to create a account? [y/n]");
+			String createAcc = scanner.next(); 
+			if(createAcc.charAt(0)== 'y'){
+			System.out.print("Your first name: ");
 			String name = scanner.next(); 
 
 			System.out.print("Your lastname: ");
@@ -30,8 +32,12 @@ public class BoatCompany {
 			authenticate.createMember(name, securityNumber);
 			registry = new Registry();
 			member = registry.getMember(id); 
-			System.out.println("Welcome "+member.getName()+"\n");
+			System.out.println("Welcome "+member.getName()+"to the club.\n");
 			gui();
+			}
+			else{
+				System.out.println("Bye!");
+			}
 		}
 		else{
 			registry = new Registry();
@@ -51,10 +57,10 @@ public class BoatCompany {
 
 			switch (state) {
 			case 1:  
-				System.out.print("	What type of boat do you want to register: ");
+				System.out.print("\tWhat type of boat do you want to register: ");
 				String boatType = scanner.next(); 
 
-				System.out.print("	How long is the "+boatType+": ");
+				System.out.print("\tHow long is the "+boatType+": ");
 				String boatLength = scanner.next(); 
 				member.writeBoatToFile(boatType, boatLength);
 				System.out.println("Your boat is now registerd!");
@@ -64,9 +70,9 @@ public class BoatCompany {
 				System.out.print("	Which boat do you want to change: ");
 				int boatNr = scanner.nextInt();
 				
-				System.out.println("	1. Change boat type");
-				System.out.println("	2. Change boat length");
-				System.out.println("	3. Change both");
+				System.out.println("\t1. Change boat type");
+				System.out.println("\t2. Change boat length");
+				System.out.println("\t3. Change both");
 				System.out.print("	Enter what you want change: ");
 				int boatChange = scanner.nextInt();
 
@@ -79,15 +85,15 @@ public class BoatCompany {
 					break;
 
 				case 2:  
-					System.out.print("	How long is the boat: ");
+					System.out.print("\tHow long is the boat: ");
 					String boatLengthChange = scanner.next(); 
 					member.manageBoat(boatNr, member.listOfBoats[boatNr-1].getType(),boatLengthChange );
 					System.out.println("The length of the boat is now changed!");
 					break;
 				case 3:  
-					System.out.print("	Boat type: ");
+					System.out.print("\tBoat type: ");
 					boatTypeChange = scanner.next(); 
-					System.out.print("	How long is the boat: ");
+					System.out.print("\tHow long is the boat: ");
 					boatLengthChange = scanner.next(); 
 					member.manageBoat(boatNr, boatTypeChange, boatLengthChange);
 					System.out.println("The boat information is now changed!");
@@ -96,40 +102,40 @@ public class BoatCompany {
 				break;
 
 			case 3:  
-				System.out.println("	Which boat do you want to delete: ");
+				System.out.println("\tWhich boat do you want to delete: ");
 				int deleteBoatId = scanner.nextInt();
 				member.deleteBoat(deleteBoatId);
 				System.out.println("Your boat is now removed");
 				break;
 
 			case 4:  
-				System.out.println("	1. Change name");
-				System.out.println("	2. Chnage security number");
-				System.out.println("	3. Change both");
+				System.out.println("\t1. Change name");
+				System.out.println("\t2. Chnage security number");
+				System.out.println("\t3. Change both");
 				System.out.print("	Enter what you want change: ");
 				int memberChange = scanner.nextInt();
 
 				switch (memberChange) {
 				case 1:  
-					System.out.print("\nYour forename: ");
+					System.out.print("\nYour first name: ");
 					String changeName = scanner.next(); 
 
-					System.out.print("\nYour lastname: ");
+					System.out.print("\nYour last name: ");
 					changeName += " "+scanner.next();
-					member.manageMember(changeName, member.getSecurityNumber());
+					member.setName(changeName);
 					System.out.println("Your name is now changed!");
 					break;
 
 				case 2:  
 					System.out.print("\nSecurity number: ");
 					String changeSecurityNumber = scanner.next(); 
-					member.manageMember(member.getName(), changeSecurityNumber);
+					member.setSecurityNumber(changeSecurityNumber);
 					System.out.println("Your Security number is now changed!");
 					break;
 				case 3:  
-					System.out.print("\nYour forename: ");
+					System.out.print("\nYour first name: ");
 					changeName = scanner.next(); 
-					System.out.print("\nYour lastname: ");
+					System.out.print("\nYour last name: ");
 					changeName += " "+scanner.next();
 					System.out.print("\nSecurity number: ");
 					changeSecurityNumber = scanner.next(); 
@@ -145,9 +151,9 @@ public class BoatCompany {
 					System.out.println("\nMember "+(i+1)+":");
 					for(int k = 0; k <3; k++){
 
-						if(k == 0)	System.out.println("	Id: "+compactList[i][k]);
-						else if(k == 1)	System.out.println("	Name: "+compactList[i][k]);
-						else if(k == 2)	System.out.println("	Number of boats: "+compactList[i][k]);
+						if(k == 0)	System.out.println("\tId: "+compactList[i][k]);
+						else if(k == 1)	System.out.println("\tName: "+compactList[i][k]);
+						else if(k == 2)	System.out.println("\tNumber of boats: "+compactList[i][k]);
 					}
 				}
 				break;
@@ -175,10 +181,10 @@ public class BoatCompany {
 				break;
 
 			case 7:  
-				System.out.println("	1. Search name");
-				System.out.println("	2. Search securitynumber");
-				System.out.println("	3. Search boat type");
-				System.out.print("	Enter what you want search for: ");
+				System.out.println("\t1. Search name");
+				System.out.println("\t2. Search securitynumber");
+				System.out.println("\t3. Search boat type");
+				System.out.print("\tEnter what you want search for: ");
 				int search = scanner.nextInt();
 
 				switch (search) {
@@ -190,16 +196,16 @@ public class BoatCompany {
 					break;
 
 				case 2:  
-//					System.out.print("Security number: ");
-//					String searchSecurityNr= scanner.next(); 
-//					searchArr = registry.containsSecurityNr(searchSecurityNr);
-//					printArray(searchArr);
+					System.out.print("Security number: ");
+					String searchSecurityNr= scanner.next(); 
+					searchArr = registry.containsSecurityNumber(searchSecurityNr);
+					printArray(searchArr);
 					break;
 				case 3:  
-//					System.out.print("Boat type: ");
-//					String searchBoatType = scanner.next(); 
-//					searchArr = registry.containsTypeOfBoat(searchBoatType);
-//					printArray(searchArr);
+					System.out.print("Boat type: ");
+					String searchBoatType = scanner.next(); 
+					searchArr = registry.containsTypeOfBoat(searchBoatType);
+					printArray(searchArr);
 					break;
 				}		
 				break;
