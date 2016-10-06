@@ -55,23 +55,39 @@ public class Member {
 		securityNumber = securityNumberChange;
 	}
 
-	public void manageMember(String inputName, String inputSecurityNumber){
+	public void manageMember(String inputName, String inputSecurityNumber) throws FileNotFoundException{
 		name = inputName;
 		securityNumber = inputSecurityNumber;
+		updateMemberFile();	
+	}
+	
+	public void updateMemberFile() throws FileNotFoundException{
+		
+		File dir = new File(iD+"");
+		dir.mkdir();
+	
+		File file = new File(iD+"/member.txt");
+		PrintWriter writer= new PrintWriter(file);
+		
+		writer.println(iD);
+		writer.println(name);
+		writer.println(securityNumber);
+		writer.close();
 	}
 
 	public void writeBoatToFile(String inputType, String inputLength){
 		try {
 			if(validateLength(inputLength)){
-				listOfBoats[numberOfBoats] = new Boat(inputType, inputLength);
+				int index = nextValidBoat();
+				listOfBoats[index] = new Boat(inputType, inputLength);
 				numberOfBoats+=1;
-				writeBoatToRegistry(numberOfBoats,inputType,inputLength);
+				writeBoatToRegistry((index+1),inputType,inputLength);
 			}
 			else{
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			System.err.println("You have reached your boat limit");
 		}
 	}
 	public void manageBoat(int boatID, String inputType, String inputLength){
@@ -116,16 +132,17 @@ public class Member {
 		}
 		return numberOfBoats;
 	}
-	private void writeBoatToRegistry(int numberOfBoats,String inputType, String inputLength) throws FileNotFoundException{
-		File file = new File(iD+"/boat_"+nextValidBoat()+".txt");
+	private void writeBoatToRegistry(int boatNumber,String inputType, String inputLength) throws FileNotFoundException{
+		File file = new File(iD+"/boat_"+boatNumber+".txt");
 		PrintWriter writer= new PrintWriter(file);
 
-		writer.println(numberOfBoats);
+		writer.println(boatNumber);
 		writer.println(inputType);
 		writer.println(inputLength);
 		writer.close();
 	}
-	public void deleteMember(){
+	
+public void deleteMember(){
 
 		File dir = new File(iD+"");
 		String[]entries = dir.list();
@@ -134,10 +151,13 @@ public class Member {
 			currentFile.delete();
 		}
 		dir.delete();
-	}
-	public void deleteBoat(int inputBoatID){
+	
+}
+	
+public void deleteBoat(int inputBoatID){
 		if(inputBoatID>=0 && inputBoatID <= numberOfBoats){
-		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
+		File boatFile = new File(getID()+"/boat_"+inputBoatID+".txt");
+		System.out.print(getID()+"/boat_"+inputBoatID+".txt");
 		boatFile.delete();
 		}
 	}

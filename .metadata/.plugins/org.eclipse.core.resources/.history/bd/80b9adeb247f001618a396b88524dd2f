@@ -1,8 +1,0 @@
-package workshop_2;
-
-public class Boat {
-	public String typeOfBoat; //
-	public int lengthOfBoat; //Length of boat in cm
-
-
-}
