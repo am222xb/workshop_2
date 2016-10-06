@@ -151,6 +151,7 @@ public void deleteMember(){
 			currentFile.delete();
 		}
 		dir.delete();
+<<<<<<< HEAD
 	
 }
 	
@@ -158,6 +159,12 @@ public void deleteBoat(int inputBoatID){
 		if(inputBoatID>=0 && inputBoatID <= numberOfBoats){
 		File boatFile = new File(getID()+"/boat_"+inputBoatID+".txt");
 		System.out.print(getID()+"/boat_"+inputBoatID+".txt");
+=======
+	}
+	public void deleteBoat(int inputBoatID){
+		if(inputBoatID>=1 && inputBoatID <= numberOfBoats){
+		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
+>>>>>>> 3a66ccb7ce2ffbce522090d842d2685ba70a235a
 		boatFile.delete();
 		}
 	}

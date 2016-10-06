@@ -1,0 +1,219 @@
+package workshop_2;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Registry {
+
+
+	public List<Member> listOfMembers;
+	private static String[][] compactList;
+	private static String[][] verboseList;
+
+	public Registry(){
+		listOfMembers = loadRegistry();
+		compactList = compactList(listOfMembers);
+		verboseList = verboseList(listOfMembers);
+	}
+
+	public static int getNextValidID() {
+		for (int i = 1; i < compactList.length+1; i++) {
+			if(!containsID(i)){
+				return i;
+			}
+		}
+		return (compactList.length+1);
+	}
+
+	public static boolean containsID(int inputID) {
+		for (int i = 0; i < verboseList.length; i++) {
+			if(Integer.parseInt(verboseList[i][0]) == inputID){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Member getMember(int inputID){
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			if(listOfMembers.get(i).getID()==inputID){
+				return listOfMembers.get(i);
+			}
+		}
+		return null;
+	}
+
+	public String[][] getVerboseList(){
+		return verboseList;
+	}
+
+	public String[][] getCompactList(){
+		return compactList;
+	}
+
+	public List<Member> loadRegistry(){
+		List<Member> arr = new ArrayList<Member>();
+		String temp[];
+		Member tempMember;
+		Boat tempBoat;
+		String member = "member";
+		String boat = "boat_";
+		for(int i = 0; i <20; i++){	
+			temp = loadFromFile(member, i);
+			if(temp != null){
+				tempMember =  new Member( Integer.parseInt(temp[0]),temp[1], temp[2]);
+				arr.add(tempMember);
+				for (int j = 0; j < 5; j++) {
+					temp = loadFromFile(boat+(j+1),i);
+					if(temp != null){
+						tempBoat = new Boat(temp[1],temp[2]);
+						tempMember.addNumberOfBoats();
+						tempMember.setBoat(j,tempBoat);
+					}
+				}
+			}	
+		}
+		return arr;
+	}
+
+	public static String[] loadFromFile(String file, int i){
+		String temp[] = new String[3];
+		try {
+			String line = null;
+			FileReader fileReader = new FileReader(i+"/"+file+".txt");
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			int innerCounter = 0;
+			while((line = bufferedReader.readLine()) != null) {
+				innerCounter++;
+				if(innerCounter == 1){
+					temp[0] = line;
+				}
+				else if (innerCounter == 2){
+					temp[1] = line;
+				}
+				else if (innerCounter == 3){
+					temp[2] = line;
+				}  	
+			} 
+			bufferedReader.close();    
+			return temp;
+		}
+		catch(FileNotFoundException ex) {            
+		}
+		catch(IOException ex) {
+			System.out.println("Error reading file");                  
+		}
+		return null;
+	}
+
+	public String[][] compactList(List<Member> inputList){
+		/*	“Compact List”; name, member id and number of boats*/
+		String[][] shortList = new String[inputList.size()][3];
+		Iterator<Member> memberIterator = inputList.iterator();
+		int i=0;
+		Member tempMember;
+		while (memberIterator.hasNext()) {
+			tempMember = memberIterator.next();
+			shortList[i][0] = tempMember.getID()+"";
+			shortList[i][1] = tempMember.getName();
+			shortList[i][2] = tempMember.getNumberOfBoats()+"";
+			i++;
+		}
+		return shortList;
+	}
+
+	public String[][] verboseList(List<Member> inputList){
+		/*“Verbose List”; name, personal number, member id and boats with boat information*/
+		String[][] longList = new String[inputList.size()][13];
+		Iterator<Member> memberIterator = inputList.iterator();
+		int i=0;
+		Member tempMember;
+		while (memberIterator.hasNext()) {
+			tempMember = memberIterator.next();
+			longList[i][0] = tempMember.getID()+"";
+			longList[i][1] = tempMember.getName();
+			longList[i][2] = tempMember.getSecurityNumber();
+			int counter=0;
+			for (int j = 3; j < 13; j+=2) {
+				if(tempMember.listOfBoats[counter]!=null){
+					longList[i][j] = tempMember.listOfBoats[counter].getType();
+					longList[i][j+1] = tempMember.listOfBoats[counter].getLength();
+				}
+				counter++;
+			}
+			i++;
+		}
+		return longList;
+	}
+
+	public String[][] containsName(String inputName){
+		List<Member> tempList = new ArrayList<Member>();
+		inputName = inputName.toLowerCase();
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			String temp = listOfMembers.get(i).getName().toLowerCase();
+			if(inputName.length()<= temp.length()){
+				temp = temp.substring(0,inputName.length());
+				if(inputName.equals(temp)){
+					tempList.add(listOfMembers.get(i));
+				}
+			}	
+		}
+		return verboseList(tempList);
+	}
+	public String[][] containsTypeOfBoat(String inputBoat){
+		List<Member> tempList = new ArrayList<Member>();
+		inputBoat = inputBoat.toLowerCase();
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			Member tempMember = listOfMembers.get(i);
+			for (int j = 0; j < tempMember.getNumberOfBoats() ; j++) {
+				String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
+				if(inputBoat.length()<=tempBoatType.length()){
+					tempBoatType = tempBoatType.substring(0,inputBoat.length());
+					if(tempBoatType.equals(inputBoat)){
+						tempList.add(listOfMembers.get(i));
+					}
+				}
+			}
+		}
+		return verboseList(tempList);
+	}
+	public String[][] containsSecurityNumber(String inputSecurityNumber){
+		List<Member> tempList = new ArrayList<Member>();
+		inputSecurityNumber = validateSecurityNumber(inputSecurityNumber);
+		
+		System.out.println(inputSecurityNumber);
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			String tempSecurityNumber = listOfMembers.get(i).getSecurityNumber();
+			System.out.println(tempSecurityNumber);
+			if(inputSecurityNumber.length()<= tempSecurityNumber.length()){
+
+				tempSecurityNumber = tempSecurityNumber.substring(0,inputSecurityNumber.length());
+				if(inputSecurityNumber.equals(tempSecurityNumber)){
+					tempList.add(listOfMembers.get(i));
+				}
+
+			}	
+		}
+		return verboseList(tempList);
+	}
+
+	private String validateSecurityNumber(String inputNumber) {
+		if(inputNumber.length()==1 && inputNumber.substring(0,1).equals("1")){
+			return "";
+		}
+		else if(inputNumber.length()>1 && inputNumber.substring(0,2).equals("19")){
+			return inputNumber.substring(2,inputNumber.length());
+		}
+		else{
+			System.out.println(inputNumber);
+			return inputNumber;
+		}
+		
+	}
+
+}

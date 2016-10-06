@@ -20,7 +20,7 @@ public class Registry {
 		compactList = compactList(listOfMembers);
 		verboseList = verboseList(listOfMembers);
 	}
-	
+
 	public static int getNextValidID() {
 		for (int i = 1; i < compactList.length+1; i++) {
 			if(!containsID(i)){
@@ -47,12 +47,15 @@ public class Registry {
 		}
 		return null;
 	}
+
 	public String[][] getVerboseList(){
 		return verboseList;
 	}
+
 	public String[][] getCompactList(){
 		return compactList;
 	}
+
 	public List<Member> loadRegistry(){
 		List<Member> arr = new ArrayList<Member>();
 		String temp[];
@@ -163,19 +166,49 @@ public class Registry {
 		return verboseList(tempList);
 	}
 	public String[][] containsTypeOfBoat(String inputBoat){
-		//TODO
 		List<Member> tempList = new ArrayList<Member>();
 		inputBoat = inputBoat.toLowerCase();
 		for (int i = 0; i < listOfMembers.size(); i++) {
 			Member tempMember = listOfMembers.get(i);
-			System.out.println("---------");
 			for (int j = 0; j < tempMember.getNumberOfBoats() ; j++) {
-
-			System.out.println(tempMember.listOfBoats[j].getType());	
+				String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
+				if(inputBoat.length()<=tempBoatType.length()){
+					tempBoatType = tempBoatType.substring(0,inputBoat.length());
+					if(tempBoatType.equals(inputBoat)){
+						tempList.add(listOfMembers.get(i));
+					}
+				}
 			}
-			
 		}
-		return null;
+		return verboseList(tempList);
+	}
+	public String[][] containsSecurityNumber(String inputSecurityNumber){
+		List<Member> tempList = new ArrayList<Member>();
+		inputSecurityNumber = validateSecurityNumber(inputSecurityNumber);// Removes unnecessary numbers, i.e. 1992 -> 92.  
+		for (int i = 0; i < listOfMembers.size(); i++) {
+			String tempSecurityNumber = validateSecurityNumber(listOfMembers.get(i).getSecurityNumber());
+			if(inputSecurityNumber.length()<= tempSecurityNumber.length()){
+				tempSecurityNumber = tempSecurityNumber.substring(0,inputSecurityNumber.length());
+				if(inputSecurityNumber.equals(tempSecurityNumber)){
+					tempList.add(listOfMembers.get(i));
+				}
+			}	
+		}
+		return verboseList(tempList);
+	}
+
+	private String validateSecurityNumber(String inputNumber) {
+		if(inputNumber.length()==1 && inputNumber.substring(0,1).equals("1")){
+			return "";
+		}
+		else if(inputNumber.length()>1 && inputNumber.substring(0,2).equals("19")){
+			return inputNumber.substring(2,inputNumber.length());
+		}
+		else{
+			System.out.println(inputNumber);
+			return inputNumber;
+		}
+		
 	}
 
 }
