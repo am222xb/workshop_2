@@ -172,13 +172,13 @@ public class Registry {
 			Member tempMember = listOfMembers.get(i);
 			for (int j = 0; j < 5 ; j++) {
 				if(tempMember.listOfBoats[j] != null){
-					String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
-					if(inputBoat.length()<=tempBoatType.length()){
-						tempBoatType = tempBoatType.substring(0,inputBoat.length());
-						if(tempBoatType.equals(inputBoat)){
-							tempList.add(listOfMembers.get(i));
-						}
+				String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
+				if(inputBoat.length()<=tempBoatType.length()){
+					tempBoatType = tempBoatType.substring(0,inputBoat.length());
+					if(tempBoatType.equals(inputBoat)){
+						tempList.add(listOfMembers.get(i));
 					}
+				}
 				}
 			}
 		}
@@ -210,7 +210,7 @@ public class Registry {
 			System.out.println(inputNumber);
 			return inputNumber;
 		}
-
+		
 	}
 
 }

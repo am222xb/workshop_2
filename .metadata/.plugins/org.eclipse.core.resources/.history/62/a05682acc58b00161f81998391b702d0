@@ -112,7 +112,7 @@ public class Registry {
 	}
 
 	public String[][] compactList(List<Member> inputList){
-		/*	â€œCompact Listâ€�; name, member id and number of boats*/
+		/*	“Compact List”; name, member id and number of boats*/
 		String[][] shortList = new String[inputList.size()][3];
 		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
@@ -128,7 +128,7 @@ public class Registry {
 	}
 
 	public String[][] verboseList(List<Member> inputList){
-		/*â€œVerbose Listâ€�; name, personal number, member id and boats with boat information*/
+		/*“Verbose List”; name, personal number, member id and boats with boat information*/
 		String[][] longList = new String[inputList.size()][13];
 		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
@@ -170,14 +170,12 @@ public class Registry {
 		inputBoat = inputBoat.toLowerCase();
 		for (int i = 0; i < listOfMembers.size(); i++) {
 			Member tempMember = listOfMembers.get(i);
-			for (int j = 0; j < 5 ; j++) {
-				if(tempMember.listOfBoats[j] != null){
-					String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
-					if(inputBoat.length()<=tempBoatType.length()){
-						tempBoatType = tempBoatType.substring(0,inputBoat.length());
-						if(tempBoatType.equals(inputBoat)){
-							tempList.add(listOfMembers.get(i));
-						}
+			for (int j = 0; j < tempMember.getNumberOfBoats() ; j++) {
+				String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
+				if(inputBoat.length()<=tempBoatType.length()){
+					tempBoatType = tempBoatType.substring(0,inputBoat.length());
+					if(tempBoatType.equals(inputBoat)){
+						tempList.add(listOfMembers.get(i));
 					}
 				}
 			}
@@ -210,7 +208,7 @@ public class Registry {
 			System.out.println(inputNumber);
 			return inputNumber;
 		}
-
+		
 	}
 
 }
