@@ -26,3 +26,11 @@ INDEX VERSION 1.127+/Users/mikaelandersson/Documents/Skolarbeten/UML/workshop_2/
 1080432954.index
 345190790.index
 1819685514.index
+<<<<<<< HEAD
+=======
+3712507179.index
+<<<<<<< HEAD
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
+=======
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
+>>>>>>> origin/master

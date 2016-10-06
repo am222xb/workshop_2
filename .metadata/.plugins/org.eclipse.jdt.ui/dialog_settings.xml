@@ -29,6 +29,10 @@
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
 	</section>
+<<<<<<< HEAD
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
+=======
+>>>>>>> f7d68f1319a9e6d618efe1836468e3611dbbb5f4
 	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="completion_proposal_size">
