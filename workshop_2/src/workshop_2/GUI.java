@@ -18,15 +18,15 @@ public class GUI {
 		//				for(int i=0;i<temp.length;i++){
 		//					System.out.println(temp[i][0]+","+temp[i][1]+","+temp[i][2]);
 		//				}
-		String[][] temp = reg.containsTypeOfBoat("sub");
-//		for(int i=0;i<temp.length;i++){
-//			for (int j = 0; j < 13; j++) {
-//				if(temp[i][j]!=null){
-//					System.out.println(temp[i][j]);
-//				}
-//			}
-//				System.out.println("*----*");
-//		}
+		String[][] temp = reg.containsSecurityNumber("19921221-52");
+		for(int i=0;i<temp.length;i++){
+			for (int j = 0; j < 13; j++) {
+				if(temp[i][j]!=null){
+					System.out.println(temp[i][j]);
+				}
+			}
+				System.out.println("*----*");
+		}
 //		String[][] temp1 = reg.getVerboseList();
 //		for(int i=0;i<temp1.length;i++){
 //			for (int j = 0; j < 13; j++) {
