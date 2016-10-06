@@ -20,9 +20,8 @@ public class Member {
 	}
 	public Boat getBoat(int inputBoat){
 		try{
-			return listOfBoats[inputBoat];
+			return listOfBoats[inputBoat-1];
 		}catch(Exception e){
-			System.err.println("Boat nr: "+inputBoat+" doesn't exist");
 			return null;
 		}
 	}
@@ -83,6 +82,7 @@ public class Member {
 				writeBoatToRegistry((index+1),inputType,inputLength);
 			}
 			else{
+
 				throw new Exception();
 			}
 		} catch (Exception e) {
@@ -129,7 +129,7 @@ public class Member {
 				return i;
 			}
 		}
-		return numberOfBoats;
+		return 5;
 	}
 	private void writeBoatToRegistry(int boatNumber,String inputType, String inputLength) throws FileNotFoundException{
 		File file = new File(iD+"/boat_"+boatNumber+".txt");
@@ -157,6 +157,8 @@ public void deleteMember(){
 		if(inputBoatID>=1 && inputBoatID <= numberOfBoats){
 		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
 		boatFile.delete();
+		listOfBoats[inputBoatID-1] = null;
+		numberOfBoats -= 1;
 		}
 	}
 
