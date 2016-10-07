@@ -25,6 +25,10 @@ public class Member {
 			return null;
 		}
 	}
+	public Boat[] getAllBoats(){
+		return listOfBoats;
+	}
+	
 	public void setBoat(int input, Boat inputBoat){
 		listOfBoats[input] = inputBoat;
 	}
