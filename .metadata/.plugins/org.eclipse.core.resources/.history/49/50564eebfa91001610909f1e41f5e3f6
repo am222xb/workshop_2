@@ -1,0 +1,45 @@
+package workshop_2;
+
+import java.io.FileNotFoundException;
+
+public class View {
+
+	public void validate() throws FileNotFoundException {
+		
+			System.out.print("You are not a member of our boat company!\nDo you want to create a account? [y/n]");
+			String createAcc = scanner.next(); 
+			if(createAcc.charAt(0)== 'y'){
+				System.out.print("Your first name: ");
+				String name = scanner.next(); 
+				id = registry.getNextValidID();
+				System.out.print("Your lastname: ");
+				name += " "+scanner.next();
+
+				System.out.print("Your securitynumber: ");
+				String securityNumber = scanner.next(); 
+
+				System.out.println("Information: "+name+" "+securityNumber);
+				authenticate.createMember(name, securityNumber);
+				registry = new Registry();
+				member = registry.getMember(id); 
+				System.out.println("Welcome "+member.getName()+"to the club.\n");
+				gui(args);
+			}
+			else{
+				main(args);
+			}
+		}
+		else{
+			registry = new Registry();
+			member = registry.getMember(id); 
+			System.out.println("Welcome back "+member.getName()+"!\n");
+			gui(args);
+		}
+	}
+
+
+public void welcomeMessage(){
+	System.out.print("Welcome to our boat company! \nLog in with your id if you´re a member. \nIf you´re not a member enter 0: ");
+}
+
+}

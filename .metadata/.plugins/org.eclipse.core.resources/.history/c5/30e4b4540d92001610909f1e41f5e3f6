@@ -1,0 +1,180 @@
+package workshop_2;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Controller {
+	static Scanner scanner = new Scanner(System.in);
+	static Authentication authenticate = new Authentication();
+	static Registry registry = new Registry();
+	static View view = new View();
+	static Member member;
+	static int id = 0;
+
+	public static void main(String[] args) throws FileNotFoundException {
+
+		boolean start = false;
+		int memberID = view.welcomeMessage();
+		
+		if(!registry.containsID(memberID)){
+
+			String createAccount = view.userIsNotMember();
+
+			if(createAccount.charAt(0)== 'y'){
+				String[] memberInformation = view.ViewCreateMember();
+				authenticate.createMember(memberInformation[0], memberInformation[2]);
+				registry = new Registry();
+				member = registry.getMember(id); 
+				view.welcomeMember();
+				start = true;
+			}
+			else{
+				main(args);
+			}
+		}
+		else{
+			registry = new Registry();
+			member = registry.getMember(memberID); 
+			view.welcomeMember();
+			start = true;
+		}
+
+	
+	view.menu();
+	while(start){
+
+		switch (view.switchState()) {
+		case 1:  
+			if(member.getNumberOfBoats() < 5){
+				String[] boatInformation = view.ViewCreateBoat();
+				member.writeBoatToFile(boatInformation[0], boatInformation[1]); //TODO new name
+			}
+			else{
+				view.boatLimitError();
+			}
+			break;
+
+		case 2:  
+			int boatNumber = view.whichBoatNumber();
+
+			if(member.getBoat(boatNumber) != null){				
+				int boatChange = view.switchStateChangeBoat();
+
+				switch (boatChange) {
+				case 1:  
+					String boatType = view.changeBoatType();
+					member.manageBoat(boatNumber, boatType, member.listOfBoats[boatNumber-1].getLength());//TODO listofboats
+					break;
+				case 2:  
+					String boatLength = view.changeBoatLength();
+					member.manageBoat(boatNumber, member.listOfBoats[boatNumber-1].getType(),boatLength );
+					break;
+				case 3:  
+					String[] boatInformation= view.changeBoat();
+					member.manageBoat(boatNumber, boatInformation[0], boatInformation[1]);
+					break;
+				}
+			}
+			else{
+				view.boatExistError();
+			}
+			break;
+
+		case 3:  
+			boatNumber = view.whichBoatNumber();
+			if(member.getBoat(boatNumber) != null){
+				member.deleteBoat(boatNumber);
+			}
+			else{
+				view.boatExistError();
+			}
+			break;
+
+		case 4:  
+			int memberChange = view.switchStateChangeMember();
+			switch (memberChange) {
+			case 1:  
+				String changeName = view.changeMemberName();
+				member.setName(changeName);
+				break;
+
+			case 2:  
+				String changeSecurityNumber = view.changeMemberSecurityNumber();
+				member.setSecurityNumber(changeSecurityNumber);
+				break;
+			case 3:  
+				String[] memberInformation =view.changeMember();
+				member.manageMember(memberInformation[0], memberInformation[1]);
+
+				break;
+			}		
+			break;
+
+		case 5: 
+			member.deleteMember();
+			start = view.deleteMember();
+			break;
+
+		case 6: 
+			view.compactList(registry.getCompactList());
+			break;
+
+		case 7: 
+			view.printList(registry.getVerboseList());
+			break;
+
+		case 8:
+			Boat[] boats = member.getAllBoats();
+			view.memberInformation(boats);
+			break;
+
+		case 9:  
+			int searchState = view.switchStateSearch();
+			
+			switch (searchState) {
+			case 1:  
+				System.out.print("Name: ");
+				String searchName = scanner.next(); 
+				String[][] searchArr = registry.containsName(searchName);
+				view.printList(searchArr);
+				break;
+
+			case 2:  
+				System.out.print("Security number: ");
+				String searchSecurityNr= scanner.next(); 
+				searchArr = registry.containsSecurityNumber(searchSecurityNr);
+				view.printList(searchArr);
+				break;
+			case 3:  
+				System.out.print("Boat type: ");
+				String searchBoatType = scanner.next(); 
+				searchArr = registry.containsTypeOfBoat(searchBoatType);
+				view.printList(searchArr);
+				break;
+			}		
+			break;
+		case 10:  
+			view.menu();
+			break;
+
+		case 11: 
+			main(args);
+			break;
+
+		case 12: 
+			System.exit(1);
+			break;
+
+		default: 
+			view.defaultError();
+			break;
+		}
+		registry = new Registry();
+	}
+	System.out.println("Good bye");
+}
+
+
+
+
+}

@@ -6,84 +6,124 @@ import java.io.PrintWriter;
 
 
 public class Member {
-	private  String name;
-	private  int iD;									
-	private  String securityNumber;					// YYYYMMDD-xxxx or YYMMDD-xxxx
-	public  Boat[] listOfBoats = new Boat[5]; // Limits number of boats to 5 per member.
-	private int numberOfBoats;
+	private  String userName;					// First and last userName of member
+	private  int iD;							// ID of member
+	private  String securityNumber;				// YYYYMMDD-xxxx or YYMMDD-xxxx
+	private  Boat[] listOfBoats = new Boat[5];	// Limits number of boats to 5 per member, changeable if needed
+	private int numberOfBoats;					// Number of boats registered by member
 
-	public Member( int inputID, String inputName, String inputSecurityNumber){
-		iD = inputID;
-		name = inputName;
-		securityNumber = inputSecurityNumber;
-		numberOfBoats = 0;
+	public Member( int iD, String userName, String securityNumber){
+		this.iD = iD;
+		this.userName = userName;
+		this.securityNumber = securityNumber;
+		this.numberOfBoats = 0;
 	}
-	public Boat getBoat(int inputBoat){
+	/**
+	 * Returns a boat from members list of boats
+	 * @param boatID
+	 * @return boat
+	 * */
+	public Boat getBoat(int boatID){
 		try{
-			return listOfBoats[inputBoat-1];
+			return listOfBoats[boatID-1];
 		}catch(Exception e){
 			return null;
 		}
 	}
+	/**
+	 * Returns all boats from member
+	 * @return listOfBoats
+	 * */
 	public Boat[] getAllBoats(){
 		return listOfBoats;
 	}
-	
-	public void setBoat(int input, Boat inputBoat){
-		listOfBoats[input] = inputBoat;
+	/**
+	 * Adds a boat to members list of boats
+	 * @param index
+	 * @param boat
+	 * */
+	public void setBoat(int index, Boat boat){
+		listOfBoats[index] = boat;
 	}
+	/**
+	 * Returns the number of boats member has
+	 * @return numberOfBoats
+	 * */
 	public int getNumberOfBoats() {
 		return numberOfBoats;
 	}
+	/**
+	 * Increments number of boats member has
+	 * */
 	public void addNumberOfBoats() {
 		numberOfBoats++;
 	}
+	/**
+	 * Returns members first and last name
+	 * @return userName
+	 * */
 	public String getName(){
-		return name;
+		return userName;
 	}
+	/**
+	 * Returns members ID number
+	 * @return iD
+	 * */
 	public int getID(){
 		return iD;
 	}
+	/**
+	 * Returns members security number
+	 * @return securityNumber
+	 * */
 	public String getSecurityNumber(){
 		return securityNumber;
 	}
-
-	public void setName(String nameChange) throws FileNotFoundException{
-		name = nameChange;
+	/**
+	 * Sets members first and last name
+	 * @param newName
+	 * */
+	public void setName(String newName) throws FileNotFoundException{
+		userName = newName;
 		updateMemberFile();
 	}
-	public void setSecurityNumber(String securityNumberChange) throws FileNotFoundException{
-		securityNumber = securityNumberChange;
+	/**
+	 * Sets members security number
+	 * @param newSecurityNumber
+	 * */
+	public void setSecurityNumber(String newSecurityNumber) throws FileNotFoundException{
+		securityNumber = newSecurityNumber;
 		updateMemberFile();
 	}
 
-	public void manageMember(String inputName, String inputSecurityNumber) throws FileNotFoundException{
-		name = inputName;
-		securityNumber = inputSecurityNumber;
-		updateMemberFile();	
-	}
-	
+	/**
+	 * Updates members personal file: ID, First and last name, Security Number
+	 * */
 	public void updateMemberFile() throws FileNotFoundException{
-		
+
 		File dir = new File(iD+"");
 		dir.mkdir();
-	
+
 		File file = new File(iD+"/member.txt");
 		PrintWriter writer= new PrintWriter(file);
-		
+
 		writer.println(iD);
-		writer.println(name);
+		writer.println(userName);
 		writer.println(securityNumber);
 		writer.close();
 	}
-
-	public void writeBoatToFile(String inputType, String inputLength){
+	/**
+	 * Writes members boat to file if maximum number of boats hasn't been reached
+	 * @param inputType
+	 * @param inputLength
+	 * */
+	public void addBoat(String inputType, String inputLength){
 		try {
 			if(validateLength(inputLength)){
-				int index = nextValidBoat();
+				int index = nextValidBoatIndex();
 				listOfBoats[index] = new Boat(inputType, inputLength);
 				numberOfBoats+=1;
-				writeBoatToRegistry((index+1),inputType,inputLength);
+				writeBoatToFile((index+1),inputType,inputLength);
 			}
 			else{
 
@@ -93,8 +133,28 @@ public class Member {
 			System.err.println("You have reached your boat limit");
 		}
 	}
-	public void manageBoat(int boatID, String inputType, String inputLength){
+	/**
+	 * Writes members boat to file
+	 * @param boatID
+	 * @param inputType
+	 * @param inputLength
+	 * */
+	private void writeBoatToFile(int boatID,String inputType, String inputLength) throws FileNotFoundException{
+		File file = new File(iD+"/boat_"+boatID+".txt");
+		PrintWriter writer= new PrintWriter(file);
 
+		writer.println(boatID);
+		writer.println(inputType);
+		writer.println(inputLength);
+		writer.close();
+	}
+	/**
+	 * Sets new Type or Length to a members boat
+	 * @param boatID
+	 * @param inputType
+	 * @param inputlength
+	 * */
+	public void manageBoat(int boatID, String inputType, String inputLength){
 		try {
 			if(validateLength(inputLength) && boatID<=numberOfBoats && boatID>=1){
 				if(!inputType.equals(listOfBoats[boatID-1].getType())){
@@ -103,19 +163,22 @@ public class Member {
 				if(!inputLength.equals(listOfBoats[boatID-1].getLength())){
 					listOfBoats[boatID-1].setLength(inputLength);
 				}
-				writeBoatToRegistry(boatID, listOfBoats[boatID-1].getType(),listOfBoats[boatID-1].getLength());
+				writeBoatToFile(boatID, listOfBoats[boatID-1].getType(),listOfBoats[boatID-1].getLength());
 			}
 			else{
 				System.out.println("Error");
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	private static Boolean validateLength(String input) {
+	/**
+	 * Controls if 'input' is of valid length
+	 * @param inputLength
+	 * */
+	private Boolean validateLength(String inputLength) {
 		try{
-			if( input.matches("[0-9 . ,]+")){
+			if( inputLength.matches("[0-9 . ,]+")){
 				return true;	
 			}
 			else{
@@ -127,25 +190,25 @@ public class Member {
 		}
 
 	}
-	public int nextValidBoat(){
+	/**
+	 * Returns from listOfBoats next valid index to add a boat
+	 * @return index
+	 * */
+	public int nextValidBoatIndex(){
+		int index = listOfBoats.length;
 		for (int i = 0; i < 5; i++) {
 			if(listOfBoats[i]==null){
-				return i;
+				index = i;
+				break;
 			}
 		}
-		return 5;
+		return index;
 	}
-	private void writeBoatToRegistry(int boatNumber,String inputType, String inputLength) throws FileNotFoundException{
-		File file = new File(iD+"/boat_"+boatNumber+".txt");
-		PrintWriter writer= new PrintWriter(file);
 
-		writer.println(boatNumber);
-		writer.println(inputType);
-		writer.println(inputLength);
-		writer.close();
-	}
-	
-public void deleteMember(){
+	/**
+	 * Deletes members full repository
+	 * */
+	public void deleteMember(){
 
 		File dir = new File(iD+"");
 		String[]entries = dir.list();
@@ -154,15 +217,18 @@ public void deleteMember(){
 			currentFile.delete();
 		}
 		dir.delete();
-	
-}
-	
+
+	}
+	/**
+	 * Deletes chosen boat's file 
+	 * @param inputBoatID
+	 * */
 	public void deleteBoat(int inputBoatID){
 		if(inputBoatID>=1 && inputBoatID <= numberOfBoats){
-		File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
-		boatFile.delete();
-		listOfBoats[inputBoatID-1] = null;
-		numberOfBoats -= 1;
+			File boatFile = new File(iD+"/boat_"+inputBoatID+".txt");
+			boatFile.delete();
+			listOfBoats[inputBoatID-1] = null;
+			numberOfBoats -= 1;
 		}
 	}
 

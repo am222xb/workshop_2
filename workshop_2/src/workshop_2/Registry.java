@@ -12,50 +12,64 @@ public class Registry {
 
 
 	public List<Member> listOfMembers;
-	private static String[][] compactList;
-	private static String[][] verboseList;
+	private String[][] compactList;
+	private String[][] verboseList;
 
+	/**
+	 * List of members, Short list, Long list
+	 * */
 	public Registry(){
 		listOfMembers = loadRegistry();
 		compactList = compactList(listOfMembers);
 		verboseList = verboseList(listOfMembers);
 	}
-
-	public static int getNextValidID() {
+	/**
+	 * Returns next valid member ID
+	 * @return nextValidID
+	 * */
+	public int getNextValidID() {
+		int nextValidID= compactList.length+1;
 		for (int i = 1; i < compactList.length+1; i++) {
 			if(!containsID(i)){
-				return i;
+				nextValidID = i;
+				break;
 			}
 		}
-		return (compactList.length+1);
+		return nextValidID;
 	}
 
-	public static boolean containsID(int inputID) {
-		for (int i = 0; i < verboseList.length; i++) {
-			if(Integer.parseInt(verboseList[i][0]) == inputID){
-				return true;
-			}
-		}
-		return false;
-	}
-
+	/**
+	 * Returns member from registry's list of members at specified index
+	 * @param inputID
+	 * @return The element at the specified position in this list
+	 * */
 	public Member getMember(int inputID){
 		for (int i = 0; i < listOfMembers.size(); i++) {
 			if(listOfMembers.get(i).getID()==inputID){
 				return listOfMembers.get(i);
+
 			}
 		}
 		return null;
 	}
-
+	/**
+	 * Returns list of member: ID, Name, Security Number, boats with boat information
+	 * @return verboseList
+	 * */
 	public String[][] getVerboseList(){
 		return verboseList;
 	}
+	/**
+	 * Returns list of member:Name, ID, Number of boats
+	 * @return compactList
+	 * */
 
 	public String[][] getCompactList(){
 		return compactList;
 	}
-
+	/**
+	 * Load list of all members with boats to the registry
+	 * */
 	public List<Member> loadRegistry(){
 		List<Member> arr = new ArrayList<Member>();
 		String temp[];
@@ -80,12 +94,16 @@ public class Registry {
 		}
 		return arr;
 	}
-
-	public static String[] loadFromFile(String file, int i){
+	/**
+	 * Loads data from file
+	 * @param file
+	 * @param iD
+	 * */
+	public static String[] loadFromFile(String file, int iD){
 		String temp[] = new String[3];
 		try {
 			String line = null;
-			FileReader fileReader = new FileReader(i+"/"+file+".txt");
+			FileReader fileReader = new FileReader(iD+"/"+file+".txt");
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			int innerCounter = 0;
 			while((line = bufferedReader.readLine()) != null) {
@@ -110,9 +128,13 @@ public class Registry {
 		}
 		return null;
 	}
-
+	/** 
+	 * Creates a compact List from the registry, contains: name, member id and number of boats
+	 * @param inputList
+	 * @return shortList
+	 * */
 	public String[][] compactList(List<Member> inputList){
-		/*	â€œCompact Listâ€�; name, member id and number of boats*/
+
 		String[][] shortList = new String[inputList.size()][3];
 		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
@@ -126,9 +148,12 @@ public class Registry {
 		}
 		return shortList;
 	}
-
+	/** 
+	 * Creates a verbose List from the registry, contains: ID, Name, Security Number, boats with boat information
+	 * @param inputList
+	 * @param longList
+	 * */
 	public String[][] verboseList(List<Member> inputList){
-		/*â€œVerbose Listâ€�; name, personal number, member id and boats with boat information*/
 		String[][] longList = new String[inputList.size()][13];
 		Iterator<Member> memberIterator = inputList.iterator();
 		int i=0;
@@ -140,9 +165,9 @@ public class Registry {
 			longList[i][2] = tempMember.getSecurityNumber();
 			int counter=0;
 			for (int j = 3; j < 13; j+=2) {
-				if(tempMember.listOfBoats[counter]!=null){
-					longList[i][j] = tempMember.listOfBoats[counter].getType();
-					longList[i][j+1] = tempMember.listOfBoats[counter].getLength();
+				if(tempMember.getAllBoats()[counter]!=null){
+					longList[i][j] = tempMember.getAllBoats()[counter].getType();
+					longList[i][j+1] = tempMember.getAllBoats()[counter].getLength();
 				}
 				counter++;
 			}
@@ -150,7 +175,24 @@ public class Registry {
 		}
 		return longList;
 	}
-
+	/**
+	 * Returns true if registry's list of members contains the specified ID
+	 * @param inputID
+	 * @return Returns true if registry's list of members contains the specified ID
+	 * */
+	public boolean containsID(int inputID) {
+		for (int i = 0; i < verboseList.length; i++) {
+			if(Integer.parseInt(verboseList[i][0]) == inputID){
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Returns true if registry's list of members contains the specified name
+	 * @param inputName
+	 * @return list of members containing the specified name
+	 * */
 	public String[][] containsName(String inputName){
 		List<Member> tempList = new ArrayList<Member>();
 		inputName = inputName.toLowerCase();
@@ -165,14 +207,19 @@ public class Registry {
 		}
 		return verboseList(tempList);
 	}
+	/**
+	 * Returns a verbose list of members who owns a boat with same type as specified
+	 * @param inputBoat
+	 * @return list of members containing the specified type of boat
+	 * */
 	public String[][] containsTypeOfBoat(String inputBoat){
 		List<Member> tempList = new ArrayList<Member>();
 		inputBoat = inputBoat.toLowerCase();
 		for (int i = 0; i < listOfMembers.size(); i++) {
 			Member tempMember = listOfMembers.get(i);
 			for (int j = 0; j < 5 ; j++) {
-				if(tempMember.listOfBoats[j] != null){
-					String tempBoatType  = tempMember.listOfBoats[j].getType().toLowerCase();
+				if(tempMember.getAllBoats()[j] != null){
+					String tempBoatType  = tempMember.getAllBoats()[j].getType().toLowerCase();
 					if(inputBoat.length()<=tempBoatType.length()){
 						tempBoatType = tempBoatType.substring(0,inputBoat.length());
 						if(tempBoatType.equals(inputBoat)){
@@ -184,7 +231,15 @@ public class Registry {
 		}
 		return verboseList(tempList);
 	}
+	/**
+	 * Returns a verbose list of members who has the same security number as specified
+	 * @param inputSecurityNumber
+	 * @return list of members containing the specified security number
+	 * */
 	public String[][] containsSecurityNumber(String inputSecurityNumber){
+		/*For managable error handling, only people born between 1900-1999 are allowed to register,
+		  Then again, who is 116 years old and people under 18 are not allowed to register.
+		 */
 		List<Member> tempList = new ArrayList<Member>();
 		inputSecurityNumber = validateSecurityNumber(inputSecurityNumber);// Removes unnecessary numbers, i.e. 1992 -> 92.  
 		for (int i = 0; i < listOfMembers.size(); i++) {
@@ -198,7 +253,11 @@ public class Registry {
 		}
 		return verboseList(tempList);
 	}
-
+	/**
+	 * If specified security number is '1' or '19' all members are returned.
+	 * @param inputNumber
+	 * @return Returns security Number shortened down to YYMMDD-xxxx
+	 * */
 	private String validateSecurityNumber(String inputNumber) {
 		if(inputNumber.length()==1 && inputNumber.substring(0,1).equals("1")){
 			return "";

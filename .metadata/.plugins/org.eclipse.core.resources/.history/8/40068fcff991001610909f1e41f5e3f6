@@ -1,0 +1,9 @@
+package workshop_2;
+
+public class user {
+
+	public static void main(String[] args) {
+
+	}
+
+}
