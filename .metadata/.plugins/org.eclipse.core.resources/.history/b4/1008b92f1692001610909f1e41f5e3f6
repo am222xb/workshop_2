@@ -1,0 +1,178 @@
+package Controller;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import Module.Member;
+import Module.Registry;
+import View.Console;
+import workshop_2.Boat;
+
+public class Program {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		Registry registry = new Registry();
+		boolean start = false;
+		Console view = new Console();
+		Member member = null;
+		
+		int memberID = view.welcomeMessage();
+		if(!registry.containsID(memberID)){
+
+			String createAccount = view.userIsNotMember();
+
+			if(createAccount.charAt(0)== 'y'){
+				String[] memberInformation = view.ViewCreateMember();
+				member.createMember(memberInformation[0], memberInformation[2], registry.getNextValidID());
+				registry = new Registry();
+				member = registry.getMember(memberID); 
+				view.welcomeMember();
+				start = true;
+			}
+			else{
+				main(args);
+			}
+		}
+		else{
+			registry = new Registry();
+			member = registry.getMember(memberID); 
+			view.welcomeMember();
+			start = true;
+		}
+
+	
+	view.menu();
+	while(start){
+
+		switch (view.switchState()) {
+		case 1:  
+			if(member.getNumberOfBoats() < 5){
+				String[] boatInformation = view.ViewCreateBoat();
+				member.addBoat(boatInformation[0], boatInformation[1]); //TODO new name
+			}
+			else{
+				view.boatLimitError();
+			}
+			break;
+
+		case 2:  
+			int boatNumber = view.whichBoatNumber();
+
+			if(member.getBoat(boatNumber) != null){				
+				int boatChange = view.switchStateChangeBoat();
+
+				switch (boatChange) {
+				case 1:  
+					String[] boatType = view.changeBoat(boatChange);
+					member.manageBoat(boatNumber, boatType[0], member.getAllBoats()[boatNumber-1].getLength());//TODO listofboats
+					break;
+				case 2:  
+					String[] boatLength = view.changeBoat(boatChange);
+					member.manageBoat(boatNumber, member.getAllBoats()[boatNumber-1].getType(),boatLength[0] );
+					break;
+				case 3:  
+					String[] boatInformation= view.changeBoat(boatChange);
+					member.manageBoat(boatNumber, boatInformation[0], boatInformation[1]);
+					break;
+				}
+			}
+			else{
+				view.boatExistError();
+			}
+			break;
+
+		case 3:  
+			boatNumber = view.whichBoatNumber();
+			if(member.getBoat(boatNumber) != null){
+				member.deleteBoat(boatNumber);
+			}
+			else{
+				view.boatExistError();
+			}
+			break;
+
+		case 4:  
+			int memberChange = view.switchStateChangeMember();
+			switch (memberChange) {
+			case 1:  
+				String[] changeName = view.changeMember(memberChange);
+				member.setName(changeName[0]);
+				break;
+
+			case 2:  
+				String[] changeSecurityNumber = view.changeMember(memberChange);
+				member.setSecurityNumber(changeSecurityNumber[0]);
+				break;
+			case 3:  
+				String[] memberInformation =view.changeMember(memberChange);
+				member.setName(memberInformation[0]);
+				member.setSecurityNumber(memberInformation[1]);
+				break;
+			}		
+			break;
+
+		case 5: 
+			member.deleteMember();
+			start = view.deleteMember();
+			break;
+
+		case 6: 
+			view.compactList(registry.getCompactList());
+			break;
+
+		case 7: 
+			view.printList(registry.getVerboseList());
+			break;
+
+		case 8:
+			Boat[] boats = member.getAllBoats();
+			view.memberInformation(boats);
+			break;
+
+		case 9:  
+			int searchState = view.switchStateSearch();
+			
+			switch (searchState) {
+			case 1:  
+				String searchName = view.search(searchState);
+				String[][] searchArr = registry.containsName(searchName);
+				view.printList(searchArr);
+				break;
+
+			case 2:  
+				String searchSecurityNr= view.search(searchState);
+				searchArr = registry.containsSecurityNumber(searchSecurityNr);
+				view.printList(searchArr);
+				break;
+			case 3:  
+				String searchBoatType = view.search(searchState);
+				searchArr = registry.containsTypeOfBoat(searchBoatType);
+				view.printList(searchArr);
+				break;
+			}		
+			break;
+		case 10:  
+			view.menu();
+			break;
+
+		case 11: 
+			main(args);
+			break;
+
+		case 12: 
+			System.exit(1);
+			break;
+
+		default: 
+			view.defaultError();
+			break;
+		}
+		registry = new Registry();
+	}
+	view.logOutMessage();
+}
+
+
+
+
+}

@@ -1,3 +1,15 @@
 1476441279702	Rename type 'user'
 1476441294260	Rename type 'view'
 1476441416596	Rename type 'GUI'
+1476451534672	Rename type 'Controller'
+1476451590903	Rename type 'View'
+1476452807845	Rename local variable 'changeMemberReturn'
+1476453220527	Delete element
+1476453419594	Rename type 'console'
+1476453433184	Move compilation unit
+1476453440827	Move compilation unit
+1476453446228	Move compilation unit
+1476453461072	Move compilation unit
+1476453466997	Move compilation unit
+1476455586115	Rename method 'ViewCreateBoat'
+1476455612592	Rename method 'ViewCreateMember'
