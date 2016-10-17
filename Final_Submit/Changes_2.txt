@@ -1,0 +1,20 @@
+Grade 2/3:
+ 
+Changes:
+
+	1. Divided "GUI" to "User" and "Console"
+	2. Removed all static elements and global variables
+	3. Removed "Authentication" 
+	4. Update diagrams accordingly
+
+Motivation:
+
+1. Divided them to implement model view and model controller seperation.
+
+2. Removed them because they create hidden dependencies that are not necessary. And made public global variables private because of encasulation.
+
+3. After the feedback we noticed that we didnt really need the authentication class because it´s responsability were better in other classes. The autentication class also caused confusion 
+   for outsider developers.
+
+4. Update diagrams accordingly to the changes made above.
+
